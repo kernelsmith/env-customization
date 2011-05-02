@@ -25,7 +25,7 @@ tstamp=
 quiet=
 shell=
 myself="$(basename $0)"
-mypid=$$
+#mypid=$$
 
 #
 #define some fxns
@@ -56,12 +56,11 @@ function err {
 	echo -en "[-] $1" >&2
 	if [ $2 ]; then exit $2;fi
 }
-
 function chk_mkdir {
 	# make a directory (with -p) if it doesn't exist
 	if [ ! -d "$1" ]; then 
 		# make the directory, or fail out
-		mkdir -p $1 ||	err "Can't write to current directory...aborting" $_ERR_CANT_WRITE_DIR
+		mkdir -p $1 ||	err "Cannot write to current directory...aborting" $_ERR_CANT_WRITE_DIR
 	fi
 }
 
@@ -97,11 +96,17 @@ function cleanup {
 	# "remove" all the remnants
 	puts "Cleaning up..."
 	
-	# change back to the original directory first
+	# change back to the original directory, as we won't always know when this will get called
 	cd $origdir
 	
+	#-stuff that's possibly mounted
+	mountain="mnt squashfs edit/dev edit/proc"
+	for mounty in $mountain; do
+		umount ${builddir}/${mounty} &> /dev/null || warn "Could not unmount ${builddir}/${mounty}\n"
+	done
+
 	#-directories
-	fastrm $builddir
+	fastrm $builddir || warn "Could not remove the build directory:  $builddir"
 	
 	#-variables/"constants"
 	for c in $(set | grep '^_ERR_' | cut -d'=' -f1); do unset ${v}; done
@@ -177,11 +182,11 @@ fi
 # 
 # if $btisoname doesn't exist, then abort
 if ! [ -f $btisoname ]; then
-	err "Can't find $btisoname... aborting\n\n" $_ERR_CANT_FIND_ISO
+	err "Cannot find $btisoname... aborting\n\n" $_ERR_CANT_FIND_ISO
 fi
 # if can't touch outname, then can't write to destination dir, abort
 if ! touch $outname; then
-	err "Can't write to $(dirname $outname)" $_ERR_CANT_WRITE_DIR
+	err "Cannot write to $(dirname $outname)" $_ERR_CANT_WRITE_DIR
 fi
 outname="$(readlink -f $outname)"
 
@@ -190,19 +195,19 @@ chk_mkdir $builddir
 cd $builddir
 
 clear
-puts "[*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*]"
+puts "----------------------------------------------------------- [*]\n"
 puts "BackTrack 4 joshomization script\n"
 puts "Setting up the build environment...\n"
 
 chk_mkdir mnt
-mount -o loop $btisoname mnt/ || err "Can't mount the iso (requires -o loop)\n" $_ERR_CANT_MOUNT
+mount -o loop $btisoname mnt/ || err "Cannot mount the iso (requires -o loop)\n" $_ERR_CANT_MOUNT
 chk_mkdir extract-cd
 rsync --exclude=/casper/filesystem.squashfs -a mnt/ extract-cd
 chk_mkdir squashfs
-mount -t squashfs -o loop mnt/casper/filesystem.squashfs squashfs || \
-	err "Can't mount the squashfs (requires -t squashfs)\n" $_ERR_CANT_MOUNT
+mount -t squashfs -o loop mnt/casper/filesystem.squashfs squashfs/ || \
+err 'Cannot mount the squashfs (requires -t squashfs)\n' $_ERR_CANT_MOUNT
 chk_mkdir edit
-puts "Copying over files, please wait ... \n"
+puts 'Copying over files, please wait ... \n'
 
 puts "...squashfs..."
 cp -a squashfs/* edit/
@@ -217,18 +222,18 @@ cp /etc/mtab edit/etc/
 
 eqo
 
-mount --bind /dev/ edit/dev || err "Can't mount /dev/ (requires --bind)\n" $_ERR_CANT_MOUNT
-mount -t proc /proc edit/proc || err "Can't mount /proc (requires -t proc)\n" $_ERR_CANT_MOUNT
+mount --bind /dev/ edit/dev || err 'Cannot mount /dev/ (requires --bind)\n' $_ERR_CANT_MOUNT
+mount -t proc /proc edit/proc || err 'Cannot mount /proc (requires -t proc)\n' $_ERR_CANT_MOUNT
 
-puts "[*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*]"
+puts "----------------------------------------------------------- [*]\n"
 puts "Entering the live iso.\n"
-puts "[*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*]"
+puts "----------------------------------------------------------- [*]\n"
 puts "If you are running a large update, you might need to stop\n"
 puts "services like crond, udev, cups, etc in the chroot\n"
 puts "before exiting your chroot environment.\n"
-puts "[*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*]"
+puts "----------------------------------------------------------- [*]\n"
 puts "Starting modifications\n"
-puts "[*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*][*]"
+puts "----------------------------------------------------------- [*]\n"
 
 ###############################################################################
 # At this point, anything starting with 'chroot edit' is in the build environ
@@ -349,8 +354,8 @@ cd $origdir
 
 eqo
 eqo
-puts "_.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._"
+puts "~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~ [*]"
 puts "Your modified iso is at ${outname}\n"
-puts "_.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._"
+puts "~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~ [*]"
 
 exit 0

@@ -104,7 +104,10 @@ function cleanup {
 	for mounty in $mountain; do
 		umount ${builddir}/${mounty} &> /dev/null || warn "Could not unmount ${builddir}/${mounty}\n"
 	done
-
+	
+	#-files
+	fastrm $outname || warn "Could not remove $outname\n"
+	
 	#-directories
 	fastrm $builddir || warn "Could not remove the build directory:  $builddir"
 	

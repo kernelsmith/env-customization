@@ -93,8 +93,6 @@ function fastrm {
 }
 
 function cleanup {
-
-	# TODO:  Check the order of unmounting
 	
 	# "remove" all the remnants
 	puts "Cleaning up..."
@@ -106,7 +104,8 @@ function cleanup {
 	mountain="edit/dev edit/proc squashfs mnt"
 	for mounty in $mountain; do
 		umount ${builddir}/${mounty} &> /dev/null || warn "Could not unmount ${builddir}/${mounty}\n"
-	donechroot edit
+	done
+	chroot edit
 	
 	#-files
 	fastrm $outname || warn "Could not remove $outname\n"

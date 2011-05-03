@@ -93,6 +93,9 @@ function fastrm {
 }
 
 function cleanup {
+
+	# TODO:  Check the order of unmounting
+	
 	# "remove" all the remnants
 	puts "Cleaning up..."
 	
@@ -100,10 +103,10 @@ function cleanup {
 	cd $origdir
 	
 	#-stuff that's possibly mounted
-	mountain="mnt squashfs edit/dev edit/proc"
+	mountain="edit/dev edit/proc squashfs mnt"
 	for mounty in $mountain; do
 		umount ${builddir}/${mounty} &> /dev/null || warn "Could not unmount ${builddir}/${mounty}\n"
-	done
+	donechroot edit
 	
 	#-files
 	fastrm $outname || warn "Could not remove $outname\n"
@@ -245,7 +248,7 @@ puts "----------------------------------------------------------- [*]\n"
 # 			OS & TOOL(REPO) UPDATES
 #-------------------------------------------
 puts "Updating the OS with apt-get update and upgrade\n"
-chroot edit /usr/bin/apt-get -y update --fix-missing
+chroot edit /usr/bin/apt-get update --fix-missing
 chroot edit /usr/bin/apt-get -y upgrade
 puts "Cleaning the apt cache\n"
 chroot edit /usr/bin/apt-get -y clean

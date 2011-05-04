@@ -256,7 +256,7 @@ chroot edit /usr/bin/apt-get -y clean
 # 			TOOL SPECIFIC UPDATES
 #--------------------------------------------
 
-#update metasploit, note you may have to accept the cert the first time
+#update metasploit, note svn update is called directly so server cert issues can be avoided
 puts "Updating metasploit\n"
 chroot edit cd /opt/metasploit3/msf3/ && /opt/usr/bin/svn update --non-interactive --trust-server-cert
 # update fast-track
@@ -359,8 +359,8 @@ cd $origdir
 
 eqo
 eqo
-puts "~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~ [*]"
+puts "~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~ [*]\n"
 puts "Your modified iso is at ${outname}\n"
-puts "~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~ [*]"
+puts "~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~._.~^~ [*]\n\n"
 
 exit 0

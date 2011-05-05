@@ -26,6 +26,7 @@ quiet=
 shell=
 myself="$(basename $0)"
 #mypid=$$
+logfile=".${myself}.log"
 
 #
 #define some fxns
@@ -33,6 +34,7 @@ myself="$(basename $0)"
 function puts {
 	# echos '[*] ' and arguments with the -e and -n flags (to stdout)
 	# only print something if quiet is empty
+	echo -en "[*] $@" > $logfile
 	if [ -z "$quiet" ]; then
 		echo -en "[*] $@"
 	fi
@@ -40,6 +42,7 @@ function puts {
 function eqo {
 	# echos the arguments if quiet is false
 	# only print something if quiet is empty
+	echo "$@" > $logfile
 	if [ -z "$quiet" ]; then
 		echo "$@"
 	fi
@@ -47,12 +50,14 @@ function eqo {
 function warn {
 	# warnings, i.e. non-fatal errors
 	# echos '[!] ' and arguments with the -e and -n flags (to stdout)
+	echo -en "[!] $@" > $logfile
 	echo -en "[!] $@"
 }
 function err {
 	# fatal or nearly-fatal errors, if you give a second argument, it is used as an exit code
 	# echos '[-] ' and first argument with the -e and -n flags and redirect to stderr
 	# if a second argument is given, this function will exit with that argument as the code
+	echo -en "[-] $1" > $logfile
 	echo -en "[-] $1" >&2
 	if [ $2 ]; then exit $2;fi
 }
@@ -194,6 +199,11 @@ if ! touch $outname; then
 	err "Cannot write to $(dirname $outname)" $_ERR_CANT_WRITE_DIR
 fi
 outname="$(readlink -f $outname)"
+# if can't touch logfile, then can't write it, abort
+if ! touch $logfile; then
+	err "Cannot write to $(dirname $logfile)" $_ERR_CANT_WRITE_DIR
+fi
+logfile="$(readlink -f $logfile)"
 
 # create the builddir if nec
 chk_mkdir $builddir

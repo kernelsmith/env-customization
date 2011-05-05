@@ -258,7 +258,7 @@ chroot edit /usr/bin/apt-get -y clean
 
 #update metasploit, note svn update is called directly so server cert issues can be avoided
 puts "Updating metasploit\n"
-chroot edit cd /opt/metasploit3/msf3/ && /opt/usr/bin/svn update --non-interactive --trust-server-cert
+chroot edit cd /opt/metasploit3/msf3/ && /usr/bin/svn update --non-interactive --trust-server-cert
 # update fast-track
 # command line updating was disabled by the fasttrack author
 #chroot edit "cd /pentest/exploits/fasttrack && python fast-track.py -c 1"

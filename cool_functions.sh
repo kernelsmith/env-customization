@@ -58,8 +58,14 @@ function fastrm {
 		templist=
 		for item in "$@"; do templist="${templist}${item}\n";done
 		echo -en $templist | perl -nle unlink
+	else 
+		if [ $(which ruby) ] &>/dev/null; then
+			templist=
+			for item in "$@"; do templist="${templist}${item}\n";done
+			echo -en $templist | ruby -nle 'File.unlink $_'
+		fi
 	else
-		# else use rm -rf as the fall back
+	# else use rm -rf as the fall back
 		rm -rf "$@"
 	fi
 }

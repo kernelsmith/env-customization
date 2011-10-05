@@ -16,13 +16,13 @@ function eqo {
 	fi
 }
 function warn {
-	# warnings, i.e. non-fatal errors
-	# echos '[!] ' and arguments with the -e and -n flags (to stdout)
-	echo -en "[!] $@"
+	# warnings, i.e. non-fatal errors to stdout
+	# echos '[-] ' and arguments with the -e and -n flags (to stdout)
+	echo -en "[-] $@"
 }
-function err {
+function die {
 	# fatal or nearly-fatal errors, if you give a second argument, it is used as an exit code
-	# echos '[-] ' and first argument with the -e and -n flags and redirect to stderr
+	# echos '[!] ' and first argument with the -e and -n flags and redirect to stderr
 	# if a second argument is given, this function will exit with that argument as the code
 	echo -en "[-] $1" >&2
 	if [ $2 ]; then exit $2;fi

@@ -94,7 +94,7 @@ function stampit {
 }
 
 function usage {
-	if [ -n "$1" ]; then err "$@";fi
+	if [ -n "$1" ]; then warn "$@";fi
 	echo
 	echo "Usage:	$myself input-iso [-o output-iso] [-t] [-s] [-q]"
 	echo "	-o name the output file output-iso instead of bt4-mod.iso"
@@ -109,4 +109,4 @@ function usage {
 #
 # TRAPS
 #
-trap ' err "Caught interrupt signal... cleaning up" && cleanup ' ABRT HUP INT TERM QUIT
+trap ' warn "Caught interrupt signal... cleaning up" && cleanup ' ABRT HUP INT TERM QUIT

@@ -21,17 +21,21 @@ if [ -z "$debian_chroot" -a -r /etc/debian_chroot ]; then
 fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-xterm-color)
+#case "$TERM" in
+#xterm-color)
     #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-    ;;
-*)
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-    ;;
-esac
+#    ;;
+#*)
+#    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+#    ;;
+#esac
+
+function git_branch {
+	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1) /'
+}
 
 # Comment in the above and uncomment this below for a color prompt
-PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(git_branch)\$ '
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
@@ -47,9 +51,9 @@ esac
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-#if [ -f ~/.bash_aliases ]; then
-#    . ~/.bash_aliases
-#fi
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
 
 # enable color support of ls and also add handy aliases
 if [ "$TERM" != "dumb" ]; then
@@ -71,7 +75,10 @@ alias l='ls -CF'
 #    . /etc/bash_completion
 #fi
 
-# SSH stuff
+#
+### SSH Stuff
+#
+
 SSH_ENV="$HOME/.ssh/environment"
 
 # start the ssh-agent

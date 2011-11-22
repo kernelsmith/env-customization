@@ -16,13 +16,13 @@ function eqo {
 	fi
 }
 function warn {
-	# warnings, i.e. non-fatal errors
-	# echos '[!] ' and arguments with the -e and -n flags (to stdout)
-	echo -en "[!] $@"
+	# warnings, i.e. non-fatal errors to stdout
+	# echos '[-] ' and arguments with the -e and -n flags (to stdout)
+	echo -en "[-] $@"
 }
-function err {
+function die {
 	# fatal or nearly-fatal errors, if you give a second argument, it is used as an exit code
-	# echos '[-] ' and first argument with the -e and -n flags and redirect to stderr
+	# echos '[!] ' and first argument with the -e and -n flags and redirect to stderr
 	# if a second argument is given, this function will exit with that argument as the code
 	echo -en "[-] $1" >&2
 	if [ $2 ]; then exit $2;fi
@@ -58,8 +58,14 @@ function fastrm {
 		templist=
 		for item in "$@"; do templist="${templist}${item}\n";done
 		echo -en $templist | perl -nle unlink
+	else 
+		if [ $(which ruby) ] &>/dev/null; then
+			templist=
+			for item in "$@"; do templist="${templist}${item}\n";done
+			echo -en $templist | ruby -nle 'File.unlink $_'
+		fi
 	else
-		# else use rm -rf as the fall back
+	# else use rm -rf as the fall back
 		rm -rf "$@"
 	fi
 }
@@ -88,7 +94,7 @@ function stampit {
 }
 
 function usage {
-	if [ -n "$1" ]; then err "$@";fi
+	if [ -n "$1" ]; then warn "$@";fi
 	echo
 	echo "Usage:	$myself input-iso [-o output-iso] [-t] [-s] [-q]"
 	echo "	-o name the output file output-iso instead of bt4-mod.iso"
@@ -103,4 +109,4 @@ function usage {
 #
 # TRAPS
 #
-trap ' err "Caught interrupt signal... cleaning up" && cleanup ' ABRT HUP INT TERM QUIT
+trap ' warn "Caught interrupt signal... cleaning up" && cleanup ' ABRT HUP INT TERM QUIT

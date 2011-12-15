@@ -106,6 +106,19 @@ function usage {
 	echo "	Takes /isos/bt4.iso and produces mybt4.iso.20110429-235609 in the current dir"
 }
 
+function countdown {
+	seconds=$1
+	: ${seconds:=120}
+	while [ $seconds -gt 0 ]
+	do
+		sleep 1 &
+		printf "\r%02d" $seconds
+		seconds=$(( $seconds - 1 )) # this is another way of doing "let"
+		wait
+	done
+	echo
+}
+
 #
 # TRAPS
 #

@@ -1,0 +1,13 @@
+countdown()
+(
+seconds=$1
+: ${seconds:=120}
+while [ $seconds -gt 0 ]
+do
+    sleep 1 &
+        printf "\r%02d" $seconds
+        seconds=$(( $seconds - 1 )) # this is another way of doing "let"
+        wait
+done
+echo
+)

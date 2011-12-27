@@ -1,0 +1,121 @@
+Developer Setup
+No-Bitrock setup
+Start w/ an ubuntu 10.04+ base
+
+    Install system prereqs:
+        sudo apt-get install postgresql-8.4
+        sudo apt-get install libpq-dev
+		# sudo apt-get install postgresql
+    Set up Ruby using RVM
+        Follow instructions here: http://beginrescueend.com/rvm/install/
+        rvm install 1.9.1p378
+        If you run into problems, check the RVM_Troubleshooting Guide
+    install the compatible version of rubygems
+        gem install rubygems-update
+        gem update --system 1.4.2
+		# rvm all do gem install rubygems-update
+		# rmv all do gem update --system
+    install all gems:
+        actionmailer-2.3.5/
+        actionpack-2.3.5/
+        activerecord-2.3.5/
+        activeresource-2.3.5/
+        activesupport-2.3.5/
+        authlogic-2.1.3/
+        pg-0.9.0/
+        rack-1.0.1/
+        rails-2.3.5/
+        thin-1.2.7/
+		#gems="actionmailer actionpack activerecord activeresource activesupport authlogic pg rack rails thin"
+		# for g in $gems; do rvm all do gem install $g; done
+    Also these gems are available in the production environment, and may need a manual install,
+		but should be installed as dependencies of the above
+        cgi_multipart_eof_fix-2.5.0/
+        color-1.4.1/
+        daemons-1.0.10/
+        eventmachine-0.12.10/
+        fastthread-1.0.7/
+        gem_plugin-0.2.3/
+        hoe-2.6.0/
+        json_pure-1.4.2/
+        transaction-simple-1.4.0/
+        rubyforge-2.0.4/
+        rubyzip-0.9.4/
+        rake-0.8.7/
+        postgres-0.7.9.2008.01.28/
+
+    checkout from svn (hdm sets up svn acccess via your pubkey) -- SVN_Structure
+        #svn co --no-externals http://dev.metasploit.com/home/svnr7/projects/pro/ pro
+		svn co --ignore-externals http://dev.metasploit.com/home/svnr7/projects/pro/ pro
+        svn co http://dev.metasploit.com/home/svn/framework3/trunk/ framework
+    symlink the framework directory to pro/msf3
+    configure postgresql
+    configure your database.yml
+
+    jcran@disko:~/pro/ui/config$ cat database.yml
+    test: 
+      adapter: postgresql
+      database: msf3_test
+      host: localhost
+      port: 7336
+      username: msf3
+      password: [password]
+      pool: 5
+      timeout: 5
+    development:
+      adapter: postgresql
+      database: msf3_dev
+      host: localhost
+      port: 7336
+      username: msf3
+      password: [password]
+      pool: 5
+      timeout: 5
+    production:
+      adapter: postgresql
+      database: msf3_prod
+      host: localhost
+      port: 7336
+      username: msf3
+      password: [password]
+      pool: 5
+      timeout: 5
+
+    start the prosvc
+
+    start the rails service
+
+    pro/ui/script/server -p 3001
+
+    use dev key: Development_Keys
+
+Setting up an environment to run integration tests:
+
+see: QA_environment_setup_guide
+Bitrock'd Installation setup (Alternative Development Environment)
+
+The best way to ensure you're working in a production environment is to install w/ the bitrock installer, and replace the packaged tree with a metasploit pro and framework svn checkout. This is an alternative to manually installing the dependencies.
+
+    Install w/ latest installer (3.6.0 at time of writing)
+    move the codebase snapshot out of the way:
+
+    mv $install_base/apps/pro $install_base/apps/pro_old 
+
+    pull down svn to $install_base/apps/pro (or symlink)
+
+    mkdir $install_base/apps/pro
+    svn co svn+ssh://metasploit.com/home/svnr7/projects/pro/ $install_base/apps/pro
+
+        rm the msf3 directory (pulled in from externals)
+        pull down msf3 to a separate directory & symlink
+
+        mkdir $install_base/apps/pro/msf3
+        svn co metasploit.com/home/svn/framework3/trunk/ $install_base/apps/pro/msf3
+
+    run bitrock script - this will copy the database.yml & other config files to the svn tree
+
+    $install_base/apps/pro/bitrocked.rb $install_base/apps/pro_old" 
+
+    use dev key: Development_Keys
+
+

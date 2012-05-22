@@ -7,7 +7,7 @@ SRC_DIR="/usr/local/src/pianobar"
 PKGS="git-core build-essential libao-dev libmad0-dev libfaad-dev libjson0-dev"
 
 function echo2(){
- echo "[*] $1"
+	echo "[*] $1"
 }
 
 echo2 "Installing required packages if nec"

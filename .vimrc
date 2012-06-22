@@ -19,7 +19,7 @@ runtime! debian.vim
 " line enables syntax highlighting by default.
 syntax on
 hi ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
-au Filetype ruby match ExtraWhitespace /\s\+$\|^\t*\+/
+au Filetype ruby match ExtraWhitespace /\s\+$\|\t\+ \+\| \+\t\+\|^ \+/
 "hi ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
 "match ExtraWhitespace /\s\+$/
 

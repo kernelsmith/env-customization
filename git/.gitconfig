@@ -1,0 +1,5 @@
+[user]
+	name = myname 
+	email = my@email.com 
+[core]
+	excludesfile = ~/.gitignore_global

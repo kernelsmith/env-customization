@@ -1,0 +1,11 @@
+#!/bin/bash
+
+thebranch="$1"
+# this assumes you have a branch with the same name as the contrib's
+# otherwise change the branch you are checking out below
+git checkout $thebranch
+git remote add contributor git://github.com/contributor/project
+git fetch contributor
+git merge contributor/$thebranch
+# if you then want to push these changes to github (your remote)
+#git push origin master

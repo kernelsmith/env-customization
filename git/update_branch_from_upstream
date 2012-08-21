@@ -1,0 +1,20 @@
+#!/bin/bash
+
+thebranch="$1"
+
+# http://gun.io/blog/how-to-github-fork-branch-and-pull-request/
+
+# if you haven't added an upsteam yet:
+# git remote add --track master upstream git://github.com/rapid7/metasploit-framework.git
+
+# switch to the branch
+git checkout $thebranch
+
+# get the latest code
+git fetch upstream
+
+# merge it with your local repo, currently active branch
+git merge upstream/master
+
+# now you should consider git push to remote
+# git push origin $thebranch

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+thebranch="$1"
+
+git checkout $thebranch
+git push origin $thebranch

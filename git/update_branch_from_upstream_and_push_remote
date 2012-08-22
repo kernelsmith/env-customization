@@ -26,7 +26,7 @@ git fetch upstream
 git merge upstream/master
 
 # now you should consider git push to remote
-#git push origin $thebranch
+git push origin $thebranch
 
 # switch back to the original branch
 git checkout $orig_branch

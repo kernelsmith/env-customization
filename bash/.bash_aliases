@@ -9,6 +9,11 @@ function rgrep() {
 	fi
 }
 
+# shorten github urls
+function shorten() {
+	curl -s -S -i http://git.io -F "url=$1" | grep Location | cut -d " " -f 2
+}
+
 function up {
 	if [ -d ".svn" ]; then
 		svn up --ignore-externals $@

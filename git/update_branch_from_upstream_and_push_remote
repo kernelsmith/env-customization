@@ -4,29 +4,34 @@ thebranch="$1"
 
 # http://gun.io/blog/how-to-github-fork-branch-and-pull-request/
 
+function puts {
+	echo -e "[*] $1"
+}
+
 # if you haven't added an upsteam yet:
 # git remote add --track master upstream git://github.com/rapid7/metasploit-framework.git
 
 # get the current branch
-function git_branch {
-    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
-}
-
-orig_branch=git_branch
+orig_branch=$(git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/')
 
 # switch to the branch
+puts "Switching branch to $thebranch"
 git checkout $thebranch
 # abort the whole thing if git checkout fails
-if [[ $? -ne 0 ]];then echo "Could not checkout the branch:$thebranch";fi
+if [[ $? -ne 0 ]];then echo "[!] Could not checkout the branch:$thebranch" && exit 1;fi
 
 # get the latest code
+puts "Fetching from upstream"
 git fetch upstream
 
 # merge it with your local repo, currently active branch
+puts "Merging with local repo"
 git merge upstream/master
 
 # now you should consider git push to remote
+puts "Pushing to remote repo"
 git push origin $thebranch
 
 # switch back to the original branch
+puts "Switching back to the original branch"
 git checkout $orig_branch

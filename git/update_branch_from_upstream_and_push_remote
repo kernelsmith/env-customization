@@ -12,7 +12,7 @@ function puts {
 # git remote add --track master upstream git://github.com/rapid7/metasploit-framework.git
 
 # get the current branch
-orig_branch=$(git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/')
+orig_branch=$(git branch | grep \* | tr -d '*')
 
 # switch to the branch
 puts "Switching branch to $thebranch"
@@ -33,5 +33,5 @@ puts "Pushing to remote repo"
 git push origin $thebranch
 
 # switch back to the original branch
-puts "Switching back to the original branch"
+puts "Switching back to the original branch ($orig_branch)"
 git checkout $orig_branch

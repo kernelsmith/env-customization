@@ -1,0 +1,1 @@
+execute -H -i -c -m -d calc.exe -f bin.exe -a "args"

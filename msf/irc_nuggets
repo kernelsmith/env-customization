@@ -1,0 +1,34 @@
+irc_nuggets
+
+egypt
+11:25 the default exe parses the template and puts shellcode in the .text section
+11:26 the exe-small method uses the old PAYLOAD: tag technique
+11:26 which is easier, but requires a custom-built exe as the tempalte template, too
+11:26 whereas the default technique is more generic and works with pretty much any exe
+11:27 also, it makes metasploit technically a virus.  since it can infect executables
+
+<platform>/<stage>/<stager> is the general format
+since it doesn't have a /<stager> at the end, it's a single
+there is no non-staged windows meterpreter
+
+kernelsmith
+egypt:  is there every going to be an unstaged meterpreter_reverse_http/s?  like after meterpreter goes into it's own repo?  Would be useful since the http/s payloads aren't dependent on constant connectivity like reverse_tcp
+
+You would write a post mod that uploads and silently installs pcap, then load the C-extension which would run in memory on the vic
+11:35 The C-extension links your C code to meterpreter, to it's a specific format.  The incognito one is a good example, possibly not the least complex tho
+11:36 extensions are here:  https://github.com/rapid7/metasploit-framework/tree/master/external/source/meterpreter/source/extensions
+11:36 the lanattacks one is the one egypt mentioned
+11:36 that's where the C is located
+11:36 the ruby for that is… sec
+11:39 here:  https://github.com/rapid7/metasploit-framework/tree/master/lib/rex/post/meterpreter/extensions
+11:39 and if your extension is going to add commands to the meterpreter user interface, then you need something here:  https://github.com/rapid7/metasploit-framework/tree/master/lib/rex/post/meterpreter/ui/console/command_dispatcher
+11:40 sounds confusing, but it's not really
+11:41 the command-dispatcher location is where commands are added, so when somebody loads your extension from the meterpreter/extensions folder they get those new commands, and that extension will push the C code, compiled as a dll, you put in that external directory
+11:42 I don't know why lanattacks has no command-dispatcher, I guess they don't add any commands
+11:43 I have written command-dispatcher before, they are actually pretty easy, I have not written an extension, I have started to, but never finished.  Looks like scriptjunkie has, he's on IRC quite a bit, but possibly not during the work day.  I think his daily work environment is pretty locked down so he might not have irc
+11:45 obviously the paths in those urls are the same as in your installation starting at "lib" which is in the root of your msf install, which is usually something like /opt/metasploit etc
+
+egypt
+3:14 basically, wrap at 80; use "# @param name [Type] Description." for arguments
+3:14 and "# @return [Type] Optional description" for return values
+

@@ -1,0 +1,11 @@
+git reset --hard HEAD (in the git directory)
+git clean -f
+rm -rf alldirsexcept.git, and maybe that one too
+git init
+git pull
+git remote add origin git@github.com:kernelsmith/msf-shell-mixins.git
+make changes, if any, otherwise done
+git add .
+git status -s
+git commit -m ""
+git push

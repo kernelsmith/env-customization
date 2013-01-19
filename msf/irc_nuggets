@@ -32,3 +32,9 @@ egypt
 3:14 basically, wrap at 80; use "# @param name [Type] Description." for arguments
 3:14 and "# @return [Type] Optional description" for return values
 
+could you wrap meterpreter so that the socket it gets handed is from a DLL you control, which responds to the communication from the meterpreter and then passes it along on another socket home once you get bi-directional communication patched up?
+<burly> i don't know how complex the response messages are from the backend for meterpreter
+<burly> but if they aren't terribly complex, at least that would allow you to not have to change meterpreter and maintain your changes going forward against the trunk
+<egypt> that's the tack azerton is taking to get dns tunneling
+<burly> semantics being, do you have to parse anything coming from it and then respond accordingly or can you just give it the equivalent of an HTTP200 all the time 
+

@@ -36,5 +36,8 @@ could you wrap meterpreter so that the socket it gets handed is from a DLL you c
 <burly> i don't know how complex the response messages are from the backend for meterpreter
 <burly> but if they aren't terribly complex, at least that would allow you to not have to change meterpreter and maintain your changes going forward against the trunk
 <egypt> that's the tack azerton is taking to get dns tunneling
-<burly> semantics being, do you have to parse anything coming from it and then respond accordingly or can you just give it the equivalent of an HTTP200 all the time 
+<burly> semantics being, do you have to parse anything coming from it and then respond accordingly or can you just give it the equivalent of an HTTP200 all the time
 
+mihi
+3:11 thelightcosine: 1) http://schierlm.users.sourceforge.net/CVE-2012-1723.html the gray paragraph at the top should answer one of your questions 2) if you want to psexec against MS Security Essentials, just use original psexec binary and do your stuff thru the command shell - the original psexesvc.exe is not flagged
+3:11 thelightcosine: 3) you can do "powershell -ExecutionPolicy Unrestricted foo.ps1" even if you have no perm to Set-ExecutionPolicy (and it works)

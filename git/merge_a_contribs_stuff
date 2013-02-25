@@ -1,11 +1,18 @@
 #!/bin/bash
 
 thebranch="$1"
-# this assumes you have a branch with the same name as the contrib's
-# otherwise change the branch you are checking out below
-git checkout $thebranch
+# this assumes you want to create a branch with the same name as the contrib's
+# otherwise remove the -b below
+git checkout -b $thebranch
 git remote add contributor git://github.com/contributor/project
 git fetch contributor
 git merge contributor/$thebranch
 # if you then want to push these changes to github (your remote)
 #git push origin master
+
+# I didn't use the 'contrib' below, but you might want to
+# change rapid7 to hdm or whatever if not coming from the rapid7 source
+# git checkout -b contrib/feature/search-module-targets-7754
+# git remote add contrib/hdmoore-r7 git://github.com/rapid7/metasploit-framework/feature/search-module-targets-7754
+# git fetch contrib/hdmoore-r7
+# git merge contrib/hdmoore-r7/feature/search-module-targets-7754

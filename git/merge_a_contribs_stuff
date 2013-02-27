@@ -1,5 +1,18 @@
 #!/bin/bash
 
+#
+# The easy way
+#
+# create a local branch like
+git checkout -b bug/RM5810
+
+# apply the patch for testing
+curl https://github.com/rapid7/metasploit-framework/pull/14166.patch | git am
+
+#
+# The harder but more official way
+#
+
 thebranch="$1"
 # this assumes you want to create a branch with the same name as the contrib's
 # otherwise remove the -b below
@@ -16,3 +29,4 @@ git merge contributor/$thebranch
 # git remote add contrib/hdmoore-r7 git://github.com/rapid7/metasploit-framework/feature/search-module-targets-7754
 # git fetch contrib/hdmoore-r7
 # git merge contrib/hdmoore-r7/feature/search-module-targets-7754
+# git remote add contrib/lmercer-r7 git://github.com/lmercer-r7/metasploit-framework/feature/rm5810-fakedns-server-support-multiple-targets

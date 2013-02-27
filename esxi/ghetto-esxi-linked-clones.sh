@@ -66,7 +66,7 @@ replace_datastore() {
 		echo "Cannot replace datastore reference in $orig_path because it does not look like [datastore1]"
 	else
 		first_half=`echo $orig_path | cut -d ']' -f 1` # becomes ~ [datastore1
-		debug_var first_half 
+		debug_var first_half
 		second_half=`echo $orig_path | cut -d ']' -f 2 | sed 's/^ *//'` # becomes ~ /path_to/my_vm
 		debug_var second_half
 		# the sed above trims leading spaces only
@@ -222,7 +222,7 @@ validateUserInput() {
 #
 
 # sanity check on the # of args
-if [ $# != 5 ]
+if [ $# -ne 5 ]
 then
 
 	printBanner

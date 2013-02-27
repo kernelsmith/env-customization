@@ -1,0 +1,34 @@
+Usage:
+        Local execution-
+            my-vmware-cmd.sh [operation] [vm_input_file] <optional_arguments>
+        Remote execution-
+            my-vmware-cmd.sh remote [ESX_ESXI_IP_ADDRESS] [operation] [vm_input_file] <optional_arguments>
+
+   Operations:
+        start [vm_input_file]
+           -- Start all VMs in the input file
+        stop [vm_input_file]
+           -- Stop all VMs in the input file
+        suspend [vm_input_file]
+           -- Suspend all VMs in the input file
+        resume [vm_input_file]
+           -- Resume all suspended VMs in the input file
+        reset [vm_input_file]
+           -- Hard reset all VMs in the input file
+        shutdown [vm_input_file]
+           -- Shutdown all VMs in the input file (VMware Tools required)
+        reboot [vm_input_file]
+           -- Reboot all VMs in the input file (VMware Tools required)
+        snap [vm_input_file]
+           -- Create administrative pristine snapshot of all VMs in the input file
+        revert [vm_input_file]
+           -- Revert all VMs in the input file back to pristine state
+        purge [vm_input_file]
+           -- Removes from local inventory and purges all VMs in the input file
+        mac [vm_input_file] [generic|nixdhcp] [http://NETWORK (172.30.0)|http://NETWORK (172.30.0)] [HOST_COUNT_START (200)] <NIC_#> default=0
+           -- Extracts MAC addresses and generates either a generic file or one compatible with *nix dhcpd
+               ( e.g. my-vmware-cmd.sh mac [vm_input_file] generic )
+               ( e.g. my-vmware-cmd.sh mac [vm_input_file] nixdhcp 172.30.0 200 )
+        vnic [vm_input_file] <NIC_#> default=0
+           -- Change vNic portgroup for all VMs in the input file
+               ( e.g. my-vmware-cmd.sh vnic [vm_input_file] 3 )

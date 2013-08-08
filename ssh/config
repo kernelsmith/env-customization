@@ -2,7 +2,7 @@ Host coolname
 	Hostname coolname.coolplace.com
 	Port 65535
 	User yourmom
-	IdentifyFile ~/.ssh/moms_rsa
+	IdentityFile ~/.ssh/moms_rsa
 
 Host coolername
 	Hostname coolername.coolerplace.com

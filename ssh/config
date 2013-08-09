@@ -2,7 +2,7 @@ Host coolname
 	Hostname bolivia.coolplace.com
 	Port 
 	User yourmom
-	IdentifyFile ~/.ssh/moms_rsa
+	IdentityFile ~/.ssh/moms_rsa
 
 Host coolername
 	Hostname coolername.coolerplace.com

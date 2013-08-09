@@ -1,6 +1,6 @@
 Host coolname
 	Hostname bolivia.coolplace.com
-	Port 
+	Port 1122
 	User yourmom
 	IdentityFile ~/.ssh/moms_rsa
 

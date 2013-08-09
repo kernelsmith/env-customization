@@ -1,6 +1,6 @@
 Host coolname
-	Hostname coolname.coolplace.com
-	Port 65535
+	Hostname bolivia.coolplace.com
+	Port 
 	User yourmom
 	IdentifyFile ~/.ssh/moms_rsa
 

@@ -4,6 +4,7 @@
 
 # delete local branch
 git branch -d $1
+# use -D to force delete
 
 # delete remote branch
-git push origin :$1
+git push origin --delete $1

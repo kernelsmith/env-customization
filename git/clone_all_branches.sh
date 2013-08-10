@@ -30,7 +30,7 @@ while getopts df: name; do
 	esac
 done
 echo
-branches_to_add=$(git branch -r | grep -v 'HEAD\|master')
+branches_to_add=$(git branch -r | grep origin | grep -v 'HEAD\|master')
 if [ -n "$filter" ]; then branches_to_add=$(echo $branches_to_add | grep $filter_arg);fi
 for branch in $branches_to_add; do
 	local_branch=$(echo $branch | cut -d "/" -f 2-)

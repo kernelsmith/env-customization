@@ -8,6 +8,8 @@ alias -f s sessions
 alias -f slv sessions -l -v
 alias -f sk sessions -k
 alias -f sK sessions -K
+alias -f si sessions -i 1
+alias -f ss1 set SESSION 1
 alias -f j jobs -l -v
 # the one below just picks the interface starting with 192 and will break when multi-command is landed
 alias -f ip ifconfig | grep "inet 192" | cut -d " " -f 2

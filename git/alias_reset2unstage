@@ -1,0 +1,1 @@
+git config --global alias.unstage 'reset HEAD --'

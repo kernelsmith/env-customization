@@ -1,6 +1,6 @@
 # Git and RVM prompting
 function git-current-branch {
-  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1) /'
+  git branch 2> /dev/null | grep \* | cut -d ' ' -f 2-
 }
 #export PS1="[\$(~/.rvm/bin/rvm-prompt v p g)] \$(git-current-branch)$PS1"
 orig_prompt="[\u@\h \W]\\$ "
@@ -21,7 +21,7 @@ function shorten {
 
 function check_shorten {
   if [ -n "$shorten"  ]; then # this will explode if shorten is 0, but I don't care
-    echo "$(shorten $1 $shorten))" # add the closing paren back on
+    echo "$(shorten $1 $shorten)"
   else
     echo $1
   fi
@@ -29,21 +29,22 @@ function check_shorten {
 
 function prompt_git {
   local ps=$bold
-  ps=${ps}$(check_shorten "$(git-current-branch)")
+  ps="${ps}(\$(check_shorten \$(git-current-branch)))"
   ps="${ps}${regular}$orig_prompt"
   export PS1="$ps"
 }
 
 function prompt_ruby {
   local ps=$bold
-  ps=${ps}$(check_shorten "($(~/.rvm/bin/rvm-prompt v p g))")
+  ps="${ps}(\$(check_shorten \$(~/.rvm/bin/rvm-prompt v p g)))"
   ps="${ps}${regular}$orig_prompt"
   export PS1="$ps"
 }
 
 function prompt_git_ruby {
-  local ps=$bold 
-  ps=${ps}$(check_shorten "($(~/.rvm/bin/rvm-prompt v p g))")$(check_shorten "$(git-current-branch)")
+  local ps=$bold
+  ps="${ps}(\$(check_shorten \$(~/.rvm/bin/rvm-prompt v p g)))"
+  ps="${ps}(\$(check_shorten \$(git-current-branch)))"
   ps="${ps}${regular}$orig_prompt"
   export PS1="$ps"
 }

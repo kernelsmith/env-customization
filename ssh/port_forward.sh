@@ -15,5 +15,5 @@ SHELL_SERVER=kernelsmith # ssh config host OR someuser@shellserver where shellse
 #   PreferredAuthentications publickey # optional, but good for putting in script
 #   IdentityFile ~/.ssh/my_rsa # optional in this case, good if you have > 1, or rename your key file from default (id_rsa)
 
-ssh -L $UNUSED_LOCAL_PORT:$ULTIMATE_DESTINATION:ULTIMATE_DESTINATION_PORT $SHELL_SERVER
+ssh -L $UNUSED_LOCAL_PORT:$ULTIMATE_DESTINATION:$ULTIMATE_DESTINATION_PORT $SHELL_SERVER
 # just login (if not using keys) and as long as this ssh session is open, your tunnel is running

@@ -2,6 +2,7 @@ require 'rubygems'
 require 'wirble'
 require 'irb/completion'
 require 'pp'
+#require 'what_methods' # gem install what_methods. Use: 
 
 IRB.conf[:AUTO_INDENT] = true
 Wirble.init

@@ -119,6 +119,34 @@ function countdown {
 	echo
 }
 
+function investigate {
+  local output_prefix='' # could be something like [*]
+  local output_sep=": " # could be ", " ": " etc
+  for varname in $@; do
+    echo -n "${output_prefix}${varname}${output_sep}"
+    v='echo $'
+    v="${v}$(echo $varname)"
+    eval $v
+  done
+}
+
+function proxystate {
+  local HTTP="off"
+  local HTTPS="off"
+  local SOCKS="off"
+  if export | grep -q http_proxy;then
+    HTTP=$http_proxy
+  fi
+  if export | grep -q https_proxy;then
+    HTTPS=$https_proxy
+  fi
+  if export | grep -q socks_proxy;then
+    SOCKS=$socks_proxy
+  fi
+  echo "[*] Current state of proxy variables"
+  investigate HTTP HTTPS SOCKS 
+}
+
 #
 # TRAPS
 #

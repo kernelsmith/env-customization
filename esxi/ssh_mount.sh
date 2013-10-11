@@ -8,9 +8,11 @@ SSH_SERVER="esxi"                                   # IP or hostname of esxi ser
 
 # mkdir if nec
 if ! [ -d "$MOUNT_POINT" ]; then
+  echo "Creating directory for mountpoint"
 	sudo mkdir -p "$MOUNT_POINT"
 fi
-
-sudo $PATH_TO_SSHFS ${SSH_USER}@${SSH_SERVER}:${REMOTE_PATH_TO_MOUNT} $MOUNT_POINT
+cmd="sudo $PATH_TO_SSHFS ${SSH_USER}@${SSH_SERVER}:${REMOTE_PATH_TO_MOUNT} $MOUNT_POINT"
 # sshfs user@hostname:path mount_point
-
+echo "Running:  $cmd"
+echo "First password is the local sudo password, second is the password for ${SSH_USER}@${SSH_SERVER}"
+$cmd

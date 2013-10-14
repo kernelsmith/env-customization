@@ -36,6 +36,10 @@ function chk_mkdir {
 	fi
 }
 
+function ttitle {
+  echo -e '\033k'$@'\033\'
+}
+
 function interact {
 	echo
 	echo

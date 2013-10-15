@@ -1,0 +1,11 @@
+# bash drop directory hook
+run_scripts()
+{
+    for script in $(ls "$1/S*" | sort); do
+      # skip non-executable snippets
+      [ -x "$script" ] && source $script
+    done
+}
+
+run_scripts ~/bashrc.d
+run_scripts ~/aliases.d

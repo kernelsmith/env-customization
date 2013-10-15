@@ -30,7 +30,7 @@ function die {
 
 function chk_mkdir {
 	# make a directory (with -p) if it doesn't exist
-	if [ ! -d "$1" ]; then 
+	if [ ! -d "$1" ]; then
 		# make the directory, or fail out
 		mkdir -p $1 ||	err "Can't write to current directory...aborting" $_ERR_CANT_WRITE_DIR
 	fi
@@ -62,7 +62,7 @@ function fastrm {
 		templist=
 		for item in "$@"; do templist="${templist}${item}\n";done
 		echo -en $templist | perl -nle unlink
-	else 
+	else
 		if [ $(which ruby) ] &>/dev/null; then
 			templist=
 			for item in "$@"; do templist="${templist}${item}\n";done
@@ -77,17 +77,17 @@ function fastrm {
 function cleanup {
 	# "remove" all the remnants
 	puts "Cleaning up..."
-	
+
 	# change back to the original directory first
 	cd $origdir
-	
+
 	#-directories
 	fastrm $builddir
-	
+
 	#-variables/"constants"
 	for c in $(set | grep '^_ERR_' | cut -d'=' -f1); do unset ${v}; done
 	for v in "builddir btisoname myself	mypid"; do unset ${c}; done
-	
+
 	#-functions?  ugh.
 	#unset -f fxnname
 	puts "Done."
@@ -121,34 +121,6 @@ function countdown {
 		wait
 	done
 	echo
-}
-
-function investigate {
-  local output_prefix='' # could be something like [*]
-  local output_sep=": " # could be ", " ": " etc
-  for varname in $@; do
-    echo -n "${output_prefix}${varname}${output_sep}"
-    v='echo $'
-    v="${v}$(echo $varname)"
-    eval $v
-  done
-}
-
-function proxystate {
-  local HTTP="off"
-  local HTTPS="off"
-  local SOCKS="off"
-  if export | grep -q http_proxy;then
-    HTTP=$http_proxy
-  fi
-  if export | grep -q https_proxy;then
-    HTTPS=$https_proxy
-  fi
-  if export | grep -q socks_proxy;then
-    SOCKS=$socks_proxy
-  fi
-  echo "[*] Current state of proxy variables"
-  investigate HTTP HTTPS SOCKS 
 }
 
 #

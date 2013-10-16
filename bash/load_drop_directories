@@ -6,6 +6,6 @@ run_scripts()
       [ -x "$script" ] && source $script
     done
 }
-
+# bashrc.d first, code there is usually more setup-oriented
 run_scripts ~/bashrc.d
 run_scripts ~/aliases.d

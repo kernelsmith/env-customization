@@ -4,15 +4,20 @@
 # Build a better shell prompt
 #
 
-# add RVM to PATH
-export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+# define the PATH ourselves if OSX
+[ -n "$IS_OSX" ] && PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin
+
+# Load RVM into a shell session *as a function*
+rvm_func="$HOME/.rvm/scripts/rvm"
+[ -x "$rvm_func" -a -s "$rvm_func" ] && source "$rvm_func"
+# Add RVM to PATH for scripting
+export PATH=$PATH:$HOME/.rvm/bin
 
 # Git and RVM prompting
 function git-current-branch {
   git branch 2> /dev/null | grep \* | cut -d ' ' -f 2-
 }
 
-#export PS1="[\$(~/.rvm/bin/rvm-prompt v p g)] \$(git-current-branch)$PS1"
 orig_prompt="[\u@\h \W]\\$ "
 bold_prompt="\[$(tput bold)\][\u@\h \W]\\$ "
 bold="\[$(tput bold)\]"

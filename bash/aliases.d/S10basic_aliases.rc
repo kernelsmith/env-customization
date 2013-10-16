@@ -1,5 +1,8 @@
-alias ls='ls --color=auto'
-alias ll='ls -lah'
+alias lc='ls --color=auto'
+# -F Display (`/') after directories, (`*') after executables, (`@') after symbolic links, 
+#    (`=') after sockets, (`%') after whiteouts, and (`|') after FIFOs.
+alias lf='ls -aF'
+alias ll='ls -Flah'
 alias la='ls -A'
 alias l='ls -CF'
 alias sudi='sudo -i'

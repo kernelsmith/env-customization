@@ -2,8 +2,8 @@
 run_scripts()
 {
     for script in $(ls "$1/S*" | sort); do
-      # skip non-executable snippets
-      [ -x "$script" ] && source $script
+      # skip non-executable and zero-length files
+      [ -x "$script" -a -s "$script" ] && source $script
     done
 }
 # bashrc.d first, code there is usually more setup-oriented

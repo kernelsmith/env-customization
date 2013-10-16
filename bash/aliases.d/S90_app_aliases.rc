@@ -3,4 +3,4 @@
 #
 
 # For OS X
-alias itunes_real="/Applications/iTunes.app/Contents/MacOS/iTunesX"
+[ -n "$IS_OSX" ] && alias itunes_real="/Applications/iTunes.app/Contents/MacOS/iTunesX"

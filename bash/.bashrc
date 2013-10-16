@@ -25,6 +25,11 @@ shopt -s checkwinsize
 #    . /etc/bash_completion
 #fi
 
-# load additional setup from drop directories.
+# Set the default editor
+export EDITOR=/usr/bin/vim
+
+# Load additional setup from drop directories if load_drop_directories is
+#  executable and non-zero sized
 # Edit ~/load_drop_directories to fine tune or comment out line below to disable.
-[ -x "~/load_drop_directories" ] && source "~/load_drop_directories"
+loader="~/load_drop_directories"
+[ -x "$loader" -a -s "$loader" ] && source "$loader"

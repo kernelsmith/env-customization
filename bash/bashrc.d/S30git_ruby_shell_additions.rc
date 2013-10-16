@@ -4,6 +4,9 @@
 # Build a better shell prompt
 #
 
+# add RVM to PATH
+export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
 # Git and RVM prompting
 function git-current-branch {
   git branch 2> /dev/null | grep \* | cut -d ' ' -f 2-

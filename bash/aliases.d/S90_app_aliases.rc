@@ -1,0 +1,6 @@
+#
+# aliases and soft links to apps
+#
+
+# For OS X
+alias itunes_real="/Applications/iTunes.app/Contents/MacOS/iTunesX"

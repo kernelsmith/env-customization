@@ -57,6 +57,7 @@ set mouse=a		" Enable mouse usage (all modes) in terminals
 "if filereadable("/etc/vim/vimrc.local")
 "  source /etc/vim/vimrc.local
 "endif
+set mouse-=a
 set number
 set tabstop=2
 set shiftwidth=2

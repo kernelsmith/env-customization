@@ -14,6 +14,6 @@ if ! [ -d "$MOUNT_POINT" ]; then
 	sudo mkdir -p "$MOUNT_POINT"
 fi
 
-sudo $PATH_TO_SSHFS ${SSH_USER}@${SSH_SERVER}:${REMOTE_PATH_TO_MOUNT} $MOUNT_POINT -o idmap=user -o allow_other -o uid=$LOCAL_USER_ID -o gid=$LOCAL_GROUP_ID
+sudo $PATH_TO_SSHFS ${SSH_USER}@${SSH_SERVER}:${REMOTE_PATH_TO_MOUNT} $MOUNT_POINT -o idmap=user -o allow_other -o uid=$LOCAL_USER_ID -o gid=$LOCAL_GROUP_IDi -o no_readadhead -o noappledouble -o nolocalcaches
 # sshfs username@hostname:remote_path local_mount_point -o idmap=user -o allow_other -o uid=1001 -o gid=1001
-
+# idmap=user,uid=501,no_readahead,noappledouble,nolocalcaches

@@ -1,0 +1,4 @@
+# make sure RVM gets loaded as a function
+script=~/etc/profile.d/rvm.sh
+# source $script if it's a regular file which is executable and non-zero-length
+[ -f "$script" -a -x "$script" -a -s "$script" ] && source $script

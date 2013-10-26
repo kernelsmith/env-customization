@@ -1,27 +1,5 @@
-# this file depends on the investigate function from basic_aliases therefore
-# should be loaded afterwards
-
-alias proxyyes='export http_proxy=http://proxy.com:8080 && export https_proxy=http://proxy.com:8080'
-alias proxyno='unset http_proxy && unset https_proxy'
-
-# this function depends on the investigate function from basic_aliases
-function proxystate {
-  local HTTP="off"
-  local HTTPS="off"
-  local SOCKS="off"
-  if export | grep -q http_proxy;then
-    HTTP=$http_proxy
-  fi
-  if export | grep -q https_proxy;then
-    HTTPS=$https_proxy
-  fi
-  if export | grep -q socks_proxy;then
-    SOCKS=$socks_proxy
-  fi
-  echo "[*] Current state of proxy variables"
-  investigate HTTP HTTPS SOCKS
-}
-
+prox="http://proxy.houston.hp.com:8080"
+alias proxyon="export http_proxy=$prox && export https_proxy=$prox"
+alias proxyoff='unset http_proxy && unset https_proxy'
 echo "Turning http(s) proxies on"
-proxyyes
-proxystate
+proxyon

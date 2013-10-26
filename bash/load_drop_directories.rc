@@ -1,0 +1,32 @@
+# bash drop directory hook
+
+# To enable debug output, uncomment the following line
+export DEBUG_DOT_FILES="true" && current="~/.bash_profile"
+[ -n "$DEBUG_DOT_FILES" ] && echo "Running inside $current"
+
+run_scripts()
+{
+    for script in $(ls "$1"/S* | sort); do
+      [ -n "$DEBUG_DOT_FILES" ] && echo "Checking for $script"
+      # skip non-existent (regular), non-executable, or zero-length files
+      if [ -f "$script" -a -x "$script" -a -s "$script" ]; then
+        echo "Executing $script"
+        source $script
+        if [ $? != 0 ]; then
+          echo "$script returned error code $?"
+        else
+          echo "$script completed successfully"
+        fi
+      else
+        msg = "$script was not executed because it's either not a regular file,"
+        msg = "$msg it's not executable, or it has a zero length."
+        echo $msg
+      fi
+    done
+}
+# export -f run_scripts
+
+# run bashrc.d files first, code there is usually more setup-oriented
+run_scripts ~/bashrc.d
+run_scripts ~/aliases.d   # export those you want available to child processes
+run_scripts ~/functions.d # export -f those you want available to child processes

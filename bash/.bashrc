@@ -2,34 +2,26 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-# If not running interactively, don't do anything
-[ -z "$PS1" ] && return
+# NOTE:  I only maintain the additions to this file as I don't currently
+# want to overwrite the entire default version.  This file should be
+# appended to the end of the default version.  See the
+# augment_my_env.sh script
 
-# don't put duplicate lines in the history. See bash(1) for more options
-#export HISTCONTROL=ignoredups
-
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
+# To enable debug output, uncomment the following line
+export DEBUG_DOT_FILES="true" && current="~/.bash_rc"
+[ -n "$DEBUG_DOT_FILES" ] && echo "Running inside $current"
 
 # enable color support of ls and also add handy aliases
-# NOTE, moved to aliases.d
-
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-#if [ -f /etc/bash_completion ]; then
-#    . /etc/bash_completion
-#fi
+# NOTE, moved to aliases.d which runs after bashrc. and will override
 
 # Set the default editor
 export EDITOR=/usr/bin/vim
 
-# Load additional setup from drop directories if load_drop_directories is
-#  executable and non-zero sized
-# Edit ~/load_drop_directories to fine tune or comment out line below to disable.
-loader="~/load_drop_directories"
-[ -x "$loader" -a -s "$loader" ] && source "$loader"
+# Possibly load additional setup from drop directories
+script="~/load_drop_directories.rc" # Edit this file to fine tune or
+# comment out the source line below to disable (or remove/rename the file)
+# source $script if it's a regular file which is executable and non-zero-length
+[ -f "$script" -a -x "$script" -a -s "$script" ] && source $script
+
+# export a var to indicate bashrc has been run
+export BASHRC_COMPLETE="true"

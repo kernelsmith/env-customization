@@ -19,7 +19,7 @@ runtime! debian.vim
 " line enables syntax highlighting by default.
 syntax on
 hi ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
-au Filetype ruby match ExtraWhitespace /\s\+$\|\t\+ \+\| \+\t\+\|^ \+/
+au Filetype ruby match ExtraWhitespace /\s\+$\|\t\+ \+\| \+\t\+/
 "hi ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
 "match ExtraWhitespace /\s\+$/
 
@@ -57,6 +57,7 @@ set mouse=a		" Enable mouse usage (all modes) in terminals
 "if filereadable("/etc/vim/vimrc.local")
 "  source /etc/vim/vimrc.local
 "endif
+set mouse-=a
 set number
 set tabstop=2
 set shiftwidth=2

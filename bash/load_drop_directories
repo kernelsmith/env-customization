@@ -1,11 +1,13 @@
 # bash drop directory hook
 run_scripts()
-{
-    for script in $(ls "$1/S*" | sort); do
-      # skip non-executable and zero-length files
-      [ -x "$script" -a -s "$script" ] && source $script
-    done
+{   
+  for script in $(ls "$1/S*" | sort); do
+    # skip non-executable and zero-length files
+    [ -x "$script" -a -s "$script" ] && source $script
+  done
+  unset script
 }
+
 # bashrc.d first, code there is usually more setup-oriented
 run_scripts ~/bashrc.d
 run_scripts ~/aliases.d

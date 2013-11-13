@@ -1,21 +1,33 @@
 # investigate function is repeated here for portability but, we
 # only define it if investigate isn't already a defined function
 if ! type -t investigate &> /dev/null; then
-  function investigate {
-    local output_prefix='' # could be something like [*]
-    local output_sep=": " # could be ", " ": " etc
-    for varname in $@; do
-      echo -n "${output_prefix}${varname}${output_sep}"
-      v='echo $'
-      v="${v}$(echo $varname)"
-      eval $v
-    done
+
+  # allows you to easily debug variables as varname:varvalue or similar
+  investigate() {
+  # if $3 isn't given, don't prefix output with anything
+  local output_prefix='' # could be something like [*]
+  if [ -n "$3" ]; then output_prefix="$3";fi
+ 
+  # if $2 isn't given, default separator to something
+  local output_sep=": " # could be ", " ": " etc
+  if [ -n "$2" ]; then output_sep="$2";fi
+ 
+  # if $1 is given, then good, if not, well jeez, don't do anything
+  local var2investigate=''
+  if [ -n "$1" ]; then
+    var2investigate="$1"
+    echo -n "${output_prefix}${var2investigate}${output_sep}"     
+    v='echo $'
+    v="${v}$(echo $var2investigate)"
+    eval $v
+  fi  
   }
+
   export -f investigate
 fi
 
 # Display the state of the proxy variables
-function proxystate {
+proxystate() {
   local HTTP="off"
   local HTTPS="off"
   local SOCKS="off"

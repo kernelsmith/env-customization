@@ -1,5 +1,10 @@
+# Sublime Project files #
+#########################
+sublime-project/
+*.sublime-project*
+
 # Temp files etc #
-###################
+##################
 *.swp
 *~
 *.orig

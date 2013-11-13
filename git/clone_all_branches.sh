@@ -30,7 +30,12 @@ while getopts df: name; do
 	esac
 done
 echo
-branches_to_add=$(git branch -r | grep origin | grep -v 'HEAD\|master')
+puts "Doing some housekeeping first..."
+puts " - Garbage collecting..."
+git gc --prune=now
+puts " - Pruning remote origin..."
+git remote prune origin
+branches_to_add=$(git branch -r | grep origin | grep -v msdn_|grep -v 'HEAD\|master')
 if [ -n "$filter" ]; then branches_to_add=$(echo $branches_to_add | grep $filter_arg);fi
 for branch in $branches_to_add; do
 	local_branch=$(echo $branch | cut -d "/" -f 2-)

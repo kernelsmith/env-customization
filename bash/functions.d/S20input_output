@@ -54,9 +54,10 @@ investigate() {
   if [ -n "$1" ]; then
     var2investigate="$1"
     echo -n "${output_prefix}${var2investigate}${output_sep}"     
-    v='echo $'
-    v="${v}$(echo $var2investigate)"
+    v='echo -n $'
+    v="${v}$(echo -n $var2investigate)"
     eval $v
+    echo
   fi
 }
 export -f investigate

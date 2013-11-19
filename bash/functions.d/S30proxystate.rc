@@ -1,7 +1,7 @@
 # investigate function is repeated here for portability but, we
 # only define it if investigate isn't already a defined function
 if ! type -t investigate &> /dev/null; then
-  function investigate {
+  investigate() {
     local output_prefix='' # could be something like [*]
     local output_sep=": " # could be ", " ": " etc
     for varname in $@; do
@@ -14,8 +14,29 @@ if ! type -t investigate &> /dev/null; then
   export -f investigate
 fi
 
+# establish proxy site values from either env or set it explicitly
+# establish your own https proxy if different than http
+if [ -n "$MYPROXY" ]; then
+  prox="$MYPROXY"
+else
+  prox="http://your-proxy-here.com:8080"
+fi
+# NOTE, we don't read the MYPROXY value at function runtime to help prevent
+#   malicious use of the MYPROXY env var.  If you want to re-define the proxies
+#   either by re-reading MYPROXY or changing the prox var, re-source this file
+proxyon() {
+  export http_proxy=$prox
+  export https_proxy=$prox # use diff val here if https is diff from http
+}
+proxyoff() {
+  unset http_proxy
+  unset https_proxy
+}
+#echo "Turning http(s) proxies on"
+#proxyon
+
 # Display the state of the proxy variables
-function proxystate {
+proxystate() {
   local HTTP="off"
   local HTTPS="off"
   local SOCKS="off"
@@ -29,6 +50,8 @@ function proxystate {
     SOCKS=$socks_proxy
   fi
   echo "[*] Current state of proxy variables"
-  investigate HTTP HTTPS SOCKS
+  investigate HTTP
+  investigate HTTPS
+  investigate SOCKS
 }
 export -f proxystate

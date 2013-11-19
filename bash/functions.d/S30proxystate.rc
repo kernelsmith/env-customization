@@ -62,6 +62,7 @@ proxystate() {
     SOCKS=$socks_proxy
   fi
   # Show the current state of proxy variables
-  for proto in "HTTP HTTPS SOCKS"; do investigate $proto;done
+  vars2show="HTTP HTTPS SOCKS"
+  for proto in $vars2show; do investigate $proto;done
 }
 export -f proxystate

@@ -1,14 +1,19 @@
 #!/bin/sh
 
 # this script tries to be posix compliant, so no bash'isms
+# usage: $0 [branch]
+# Updates branch from upstream.  If no branch given, master is assumed
 
 # function declarations
 puts() {
 	echo "[*]  $1"
 }
-
+branch="master"
+if [ -n "$1" ]; then
+	branch="$1"
+fi
 echo
-git checkout master # just to be safe
+git checkout $branch
 # we're going to use the https version here because ssh is blocked where I work
 upstream='https://github.com/rapid7/metasploit-framework.git'
 #upstream='git://github.com/rapid7/metasploit-framework.git'

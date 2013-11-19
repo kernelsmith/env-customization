@@ -19,9 +19,10 @@ script="~/.bashrc"
 if [ -n "$IS_OSX" ]; then
   [ -n "$DEBUG_DOT_FILES" ] && echo "We are running in OS X so sourcing $script"
   [ -f "$script" -a -x "$script" -a -s "$script" ] && source "$script"
-else if [ -n "$BASHRC_COMPLETE" ]; then
-    # then it's likely that it's NOT already been run, or didn't complete
-    [ -n "$DEBUG_DOT_FILES" ] && echo "Doesn't seem bashrc has been run, so sourcing $script"
-    [ -f "$script" -a -x "$script" -a -s "$script" ] && source "$script"
-  fi
+elif [ -n "$BASHRC_COMPLETE" ]; then
+  # then it's likely that it's NOT already been run, or didn't complete
+  # BASHRC_COMPLETE is defined and exported when my bashrc file completes
+  [ -n "$DEBUG_DOT_FILES" ] && echo "Doesn't seem bashrc has been run, so sourcing $script"
+  [ -f "$script" -a -x "$script" -a -s "$script" ] && source "$script"
 fi
+

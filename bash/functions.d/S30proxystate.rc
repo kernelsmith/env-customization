@@ -61,7 +61,7 @@ proxystate() {
   if export | grep -q socks_proxy;then
     SOCKS=$socks_proxy
   fi
-  echo "[*] Current state of proxy variables"
+  # Show the current state of proxy variables
   for proto in "HTTP HTTPS SOCKS"; do investigate $proto;done
 }
 export -f proxystate

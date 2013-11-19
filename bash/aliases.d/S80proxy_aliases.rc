@@ -1,5 +1,0 @@
-prox="http://proxy.com:8080"
-alias proxyon="export http_proxy=$prox && export https_proxy=$prox"
-alias proxyoff='unset http_proxy && unset https_proxy'
-echo "Turning http(s) proxies on"
-proxyon

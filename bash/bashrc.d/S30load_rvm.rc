@@ -1,4 +1,7 @@
-# make sure RVM gets loaded as a function
+#
+# make sure RVM gets loaded as a function (for system-wide installs)
+#
+debug "load_rvm"
 script=~/etc/profile.d/rvm.sh
 # source $script if it's a regular file which is executable and non-zero-length
 [ -f "$script" -a -x "$script" -a -s "$script" ] && source $script

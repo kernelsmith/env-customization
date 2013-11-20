@@ -1,6 +1,9 @@
 #
 # Basic Shell Prompt Settings
-#   These settings may be overriden by code in aliases.d or bashrc.d
+#
+# NOTE:  These settings may be overriden by code in aliases.d or bashrc.d
+
+debug "default_shell_prompt"
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "$debian_chroot" -a -r /etc/debian_chroot ]; then

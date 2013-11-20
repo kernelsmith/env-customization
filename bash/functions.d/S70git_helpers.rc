@@ -1,0 +1,30 @@
+#
+# Functions to help with git, github operations
+#
+
+# shorten github urls
+function shorten() {
+  curl -s -S -i http://git.io -F "url=$1" | grep Location | cut -d " " -f 2
+}
+export -f shorten
+
+# update all given git branches with latest from upstream
+# default to master branch if no args given
+function up {
+  git fetch upstream
+  # default to updating the master branch if no branches supplied
+  if [ -n "$1" ];then
+    branches="$@"
+  else
+    branches="master"
+  fi
+
+  for branch in $branches; do
+    git checkout $branch
+    stash=$(git stash save)
+    git fetch
+    git rebase upstream/master
+    # if anything got stashed, reapply it?
+    [ "$stash" != "No local changes to save" ] && git stash pop
+  done
+}; export -f up

@@ -1,31 +1,36 @@
 # By default, this file will affect the PS1 shell prompt
 
 #
-# Build a better shell prompt
+# Build a more complex dev shell prompt
 #
 
-# define the PATH ourselves if OSX
-[ -n "$IS_OSX" ] && PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin
+debug "git_ruby_shell_additions"
 
-# Load RVM into a shell session *as a function*
+# Load RVM into a shell session *as a function* (if non-system-wide install)
 rvm_func="$HOME/.rvm/scripts/rvm"
-[ -x "$rvm_func" -a -s "$rvm_func" ] && source "$rvm_func"
-# Add RVM to PATH for scripting
-export PATH=$PATH:$HOME/.rvm/bin
+if [ -x "$rvm_func" -a -s "$rvm_func" ]; then
+  source "$rvm_func"
+  # Add RVM to PATH for scripting
+  export PATH=$PATH:$HOME/.rvm/bin
+fi
 
 # Git and RVM prompting
-function git-current-branch {
-  git branch 2> /dev/null | grep \* | cut -d ' ' -f 2-
+git-current-branch() {
+  if which git &> /dev/null; then
+    git branch 2> /dev/null | grep \* | cut -d ' ' -f 2-
+  else
+    echo "git not avail"
+  fi
 }
 
 orig_prompt="[\u@\h \W]\\$ "
 bold_prompt="\[$(tput bold)\][\u@\h \W]\\$ "
 bold="\[$(tput bold)\]"
 regular="\[$(tput sgr0)\]"
-shorten="14" # set to '' for no shortening, otherwise number of chars to display for long inputs
+export shorten="14" # set to '' for no shortening, otherwise number of chars to display for long inputs
 
 # shorten a string passed as $1 to the length given as $2
-function shorten {
+shorten() {
   str="$1"
   len=$2
   #if $str -eq "metasploit-framework"; then
@@ -36,7 +41,7 @@ function shorten {
 }
 
 # check if the shorten variable has a value, if so, send $1 to be shortened
-function check_shorten {
+check_shorten() {
   if [ -n "$shorten"  ]; then # this will explode if shorten is 0, but I don't care
     echo "$(shorten $1 $shorten)"
   else
@@ -45,7 +50,7 @@ function check_shorten {
 }
 
 # add git branch info, shortened, to the shell prompt
-function prompt_git {
+prompt_git() {
   local ps=$bold
   ps="${ps}(\$(check_shorten \$(git-current-branch)))"
   ps="${ps}${regular}$orig_prompt"
@@ -53,18 +58,26 @@ function prompt_git {
 }
 
 # add ruby ver info, shortened, to the shell prompt
-function prompt_ruby {
-  local ps=$bold
-  ps="${ps}(\$(check_shorten \$(~/.rvm/bin/rvm-prompt v p g)))"
-  ps="${ps}${regular}$orig_prompt"
-  export PS1="$ps"
+prompt_ruby() {
+  if which rvm &> /dev/null; then
+    local ps=$bold
+    ps="${ps}(\$(check_shorten \$(~/.rvm/bin/rvm-prompt v p g)))"
+    ps="${ps}${regular}$orig_prompt"
+    export PS1="$ps"
+  else
+    export PS1="(no rvm)$orig_prompt"
+  fi
 }
 
 # add both git branch and ruby ver info, shortened, to the shell prompt
-function prompt_git_ruby {
+prompt_git_ruby() {
   local ps=$bold
-  ps="${ps}(\$(check_shorten \$(~/.rvm/bin/rvm-prompt v p g)))"
-  ps="${ps}(\$(check_shorten \$(git-current-branch)))"
+  if which rvm &> /dev/null; then
+    ps="${ps}(\$(check_shorten \$(~/.rvm/bin/rvm-prompt v p g)))"
+  fi
+  if which git &> /dev/null; then
+    ps="${ps}(\$(check_shorten \$(git-current-branch)))"
+  fi
   ps="${ps}${regular}$orig_prompt"
   export PS1="$ps"
 }

@@ -2,5 +2,7 @@
 # aliases and soft links to apps
 #
 
+debug "app_aliases.rc"
+
 # For OS X
 [ -n "$IS_OSX" ] && alias itunes_real="/Applications/iTunes.app/Contents/MacOS/iTunesX"

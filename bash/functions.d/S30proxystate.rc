@@ -1,6 +1,13 @@
+#
+# Functions used to change or display the proxy state
+#
+
+debug "proxystate.rc"
+
 # investigate function is repeated here for portability but, we
 # only define it if investigate isn't already a defined function
 if ! type -t investigate &> /dev/null; then
+  debug "investigate function was not previously declared, doing so now"
   # allows you to easily debug variables as varname:varvalue or similar
   investigate() {
   # if $3 isn't given, don't prefix output with anything
@@ -44,8 +51,6 @@ proxyoff() {
   unset http_proxy
   unset https_proxy
 }
-#echo "Turning http(s) proxies on"
-#proxyon
 
 # Display the state of the proxy variables
 proxystate() {

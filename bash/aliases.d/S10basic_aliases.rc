@@ -1,5 +1,11 @@
+#
+# Basic aliases without which one cannot live :)
+#
+
+debug "basic_aliases.rc"
+
 alias lc='ls --color=auto'
-# -F Display (`/') after directories, (`*') after executables, (`@') after symbolic links, 
+# -F Display (`/') after directories, (`*') after executables, (`@') after symbolic links,
 #    (`=') after sockets, (`%') after whiteouts, and (`|') after FIFOs.
 alias lf='ls -aF'
 alias ll='ls -Flah'
@@ -8,26 +14,3 @@ alias l='ls -CF'
 alias sudi='sudo -i'
 alias suck='sudo -u ks'
 alias xclip='xclip -sel clip'
-
-function rgrep() {
-	if [ -n "${2}" ]; then
-		find -L . -type f -name \*.*rb -exec grep -n -C $2 -i -H --color "$1" {} \;
-	else
-		find -L . -type f -name \*.*rb -exec grep -n -i -H --color "$1" {} \;
-	fi
-}
-
-function investigate {
-  local output_prefix='' # could be something like [*]
-  local output_sep=": " # could be ", " ": " etc
-  for varname in $@; do
-    echo -n "${output_prefix}${varname}${output_sep}"
-    v='echo $'
-    v="${v}$(echo $varname)"
-    eval $v
-  done
-}
-
-function ttitle {
-  echo -e '\033k'$@'\033\'
-}

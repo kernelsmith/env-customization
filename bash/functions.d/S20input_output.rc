@@ -2,6 +2,8 @@
 # I/O functions, those generally involving stdout, stderr, stdin
 #
 
+debug "input_output.rc"
+
 # most of these functions will check the length of var $quiet and will not
 # output anything (or less at least) if $quiet is not empty, allows scripts
 # to do stuff like if [ "$arg" == "-q" ]; then quiet=1;fi

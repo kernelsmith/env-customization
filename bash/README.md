@@ -12,7 +12,7 @@ export DEBUG_DOT_FILES="true".  You will then see file searches and loads etc.
 This stuff is not ready for primetime, I haven't even written an "install" script
 yet, so it's easiest to just do this:
 
-```Shell
+```Bash
 git clone https://github.com/kernelsmith/env-customization.git
 ln -s ~/.bash_profile env-customization/bash/.bash_profile
 ln -s ~/.bashrc env-customization/bash/.bashrc

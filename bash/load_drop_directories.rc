@@ -17,7 +17,7 @@ run_scripts()
         debug "Sourcing $script"
         indent+="$INDENT_VAL"
         source $script
-        if [ $? != 0 ]; then
+        if [ "$?" -ne "0" ]; then
           # display error even if debug is off
           echo "$indent$script returned error code $?"
           indent=$orig_indent

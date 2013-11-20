@@ -23,7 +23,7 @@ export indent="" # the current total indentation to use
 # DEBUGGING
 #
 # To enable debug output, uncomment the following line
-export DEBUG_DOT_FILES="true"
+#export DEBUG_DOT_FILES="true"
 debug() {
   [ -n "$DEBUG_DOT_FILES" ] && echo "$indent[DEBUG] $@"
 }
@@ -61,3 +61,6 @@ echo "[*] Turning on the CLI proxies from $current."
 proxyon
 echo "[*] The current state of CLI proxy variables:"
 proxystate
+
+# disable debugging if set
+unset DEBUG_DOT_FILES

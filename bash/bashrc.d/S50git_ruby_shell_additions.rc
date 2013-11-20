@@ -16,17 +16,25 @@ fi
 
 # Git and RVM prompting
 git-current-branch() {
+  # do not put spaces in these messages
+  local MSG_NOT_GIT_REPO="not_repo"
+  local MSG_GIT_UNAVAILABLE="git_unavail"
+
   if which git &> /dev/null; then
-    git branch 2> /dev/null | grep \* | cut -d ' ' -f 2-
+    if git branch &> /dev/null; then
+      git branch 2> /dev/null | grep \* | cut -d ' ' -f 2-
+    else
+      echo $MSG_NOT_GIT_REPO
+    fi
   else
-    echo "git not avail"
+    echo $MSG_GIT_UNAVAILABLE
   fi
 }
 
-orig_prompt="[\u@\h \W]\\$ "
-bold_prompt="\[$(tput bold)\][\u@\h \W]\\$ "
-bold="\[$(tput bold)\]"
-regular="\[$(tput sgr0)\]"
+orig_prompt="[\u@\h \W]\\$ " # set this to "$PS1" to preserve your current prompt
+#bold_prompt="\[$(tput bold)\][\u@\h \W]\\$ "
+BOLD="\[$(tput bold)\]"
+REGULAR="\[$(tput sgr0)\]"
 export shorten="14" # set to '' for no shortening, otherwise number of chars to display for long inputs
 
 # shorten a string passed as $1 to the length given as $2
@@ -51,18 +59,18 @@ check_shorten() {
 
 # add git branch info, shortened, to the shell prompt
 prompt_git() {
-  local ps=$bold
+  local ps=$BOLD
   ps="${ps}(\$(check_shorten \$(git-current-branch)))"
-  ps="${ps}${regular}$orig_prompt"
+  ps="${ps}${REGULAR}$orig_prompt"
   export PS1="$ps"
 }
 
 # add ruby ver info, shortened, to the shell prompt
 prompt_ruby() {
   if which rvm &> /dev/null; then
-    local ps=$bold
+    local ps=$BOLD
     ps="${ps}(\$(check_shorten \$(~/.rvm/bin/rvm-prompt v p g)))"
-    ps="${ps}${regular}$orig_prompt"
+    ps="${ps}${REGULAR}$orig_prompt"
     export PS1="$ps"
   else
     export PS1="(no rvm)$orig_prompt"
@@ -71,14 +79,14 @@ prompt_ruby() {
 
 # add both git branch and ruby ver info, shortened, to the shell prompt
 prompt_git_ruby() {
-  local ps=$bold
+  local ps=$BOLD
   if which rvm &> /dev/null; then
     ps="${ps}(\$(check_shorten \$(~/.rvm/bin/rvm-prompt v p g)))"
   fi
   if which git &> /dev/null; then
     ps="${ps}(\$(check_shorten \$(git-current-branch)))"
   fi
-  ps="${ps}${regular}$orig_prompt"
+  ps="${ps}${REGULAR}$orig_prompt"
   export PS1="$ps"
 }
 

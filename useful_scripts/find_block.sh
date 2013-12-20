@@ -28,7 +28,12 @@ usage()
   if [[ -n "$err_lev" ]]; then exit $err_lev;fi
 }
 
+# if "-h" given, give usage & exit 0
+if [[ "$1" -eq "-h" ]]; then usage 0;fi
+# if not given 2 options, barf
 if [[ $* -ne 2 ]]; then usage 255;fi
+
+# if options seem good, press on
 target_file="$1"
 target_part="$2"
 

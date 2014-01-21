@@ -4,5 +4,8 @@
 
 debug "app_aliases.rc"
 
+alias tl='t timeline -r -l'
+alias pastebin='pastebin -l ruby -e N '
+
 # For OS X
 [ -n "$IS_OSX" ] && alias itunes_real="/Applications/iTunes.app/Contents/MacOS/iTunesX"

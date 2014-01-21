@@ -29,10 +29,10 @@ set background=dark
 
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
-"if has("autocmd")
-"  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-"    \| exe "normal! g'\"" | endif
-"endif
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
 
 " Uncomment the following to have Vim load indentation rules according to the
 " detected filetype. Per default Debian Vim only load filetype specific
@@ -50,13 +50,14 @@ set ignorecase		" Do case insensitive matching
 "set incsearch		" Incremental search
 "set autowrite		" Automatically save before commands like :next and :make
 "set hidden             " Hide buffers when they are abandoned
-set mouse=a		" Enable mouse usage (all modes) in terminals
+"set mouse=a		" Enable mouse usage (all modes) in terminals
 
 " Source a global configuration file if available
 " XXX Deprecated, please move your changes here in /etc/vim/vimrc
 "if filereadable("/etc/vim/vimrc.local")
 "  source /etc/vim/vimrc.local
 "endif
+set incsearch
 set background=dark
 set mouse-=a
 set number

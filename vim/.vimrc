@@ -57,10 +57,24 @@ set mouse=a		" Enable mouse usage (all modes) in terminals
 "if filereadable("/etc/vim/vimrc.local")
 "  source /etc/vim/vimrc.local
 "endif
-set background=dark
+
+"set background=dark
 set mouse-=a
 set number
-set tabstop=2
-set shiftwidth=2
-set expandtab
+
+" From https://gist.github.com/todb-r7/4658778
+set nocompatible
+colorscheme slate
+set background=dark
+filetype plugin indent on
+set hls
+ 
+" Pretty standard Ruby default tab indentation
+set tabstop=2 softtabstop=2 shiftwidth=2 expandtab shiftround smarttab
 retab
+
+" Make gq a little more compact.
+set textwidth=72
+ 
+" http://vim.wikia.com/wiki/Highlight_unwanted_spaces
+set list listchars=tab:»·,trail:·

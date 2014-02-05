@@ -51,10 +51,12 @@ for dropdir in $(ls ${source_dir}/*.d); do
   homelink "$dropdir"
 done
 
-inform "Creating ${HOME}/private.d, put anything private in there that
-you want to get loaded.  See the new *.d directories in ${HOME} for
-examples"
-mkdir ${HOME}/private.d # for your secret sauce, it will get loaded automatically
-# put stuff in private.d, and don't forget to chmod them
-inform "Setting perms on private.d to RWX by owner only"
-chmod -R 700 ${HOME}/private.d # or whatever
+priv="${HOME}/private.d"
+if ! [ -d priv ]; then
+  inform "Creating $priv, put anything private in there that you want to
+  get loaded.  See the new *.d directories in ${HOME} for examples"
+  mkdir "$priv" # for your secret sauce, it will get loaded automatically
+  # put stuff in private.d, and don't forget to chmod them
+  inform "Setting perms on private.d to RWX by owner only"
+  chmod -R 700 "$priv" # or whatever
+fi

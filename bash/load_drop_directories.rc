@@ -19,7 +19,7 @@ run_scripts()
         source $script
         if [ "$?" -ne "0" ]; then
           # display error even if debug is off
-          echo "$indent$script returned error code $?"
+          echo "$indent$script returned error code --${?}--"
           indent=$orig_indent
         else
           debug "$script completed successfully"

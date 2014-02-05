@@ -32,3 +32,5 @@ indent=$orig_indent
 # export a var to indicate bashrc has been run
 debug "Setting BASHRC_COMPLETE to true"
 export BASHRC_COMPLETE="true"
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

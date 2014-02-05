@@ -54,7 +54,7 @@ for dropdir in $(ls ${source_dir} | grep '\.d' 2>/dev/null); do
 done
 
 priv="${HOME}/private.d"
-if ! [ -d priv ]; then
+if ! [ -d $priv ]; then
   inform "Creating $priv, put anything private in there that you want to
   get loaded.  See the new *.d directories in ${HOME} for examples"
   mkdir "$priv" # for your secret sauce, it will get loaded automatically

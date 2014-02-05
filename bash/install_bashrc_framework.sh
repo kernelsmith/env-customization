@@ -34,7 +34,8 @@ else
   exit 128
 fi
 
-home_files_to_backup="${HOME}/.bash_profile ${HOME}/.bashrc ${HOME}/.vimrc"
+home_files_to_backup="${HOME}/.bash_profile ${HOME}/.bashrc
+${HOME}/.vimrc ${HOME}/.bash_aliases"
 inform "backing up $home_files_to_backup"
 backup $home_files_to_backup
 

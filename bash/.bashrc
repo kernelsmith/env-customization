@@ -9,13 +9,13 @@
 # Altho, that's exactly what I'm doing right now
 
 # set to anything to see debug output, otherwise nothing
-export DEBUG_BASH_FRAMEWORK=1
+export DEBUG_BASH_FRAMEWORK=
 if [ -n "$DEBUG_BASH_FRAMEWORK" ];then
   on_off="on"
 else
   on_off="off"
 fi
-echo "[*] Debugging is currently $on_off.  To change, edit $0."
+echo "[*] Debugging is currently $on_off.  To change, edit .bashrc."
 debug() {
   if [ -n "$DEBUG_BASH_FRAMEWORK" ];then
     echo "[DEBUG] $@"

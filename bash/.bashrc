@@ -6,7 +6,16 @@
 # want to overwrite the entire default version.  This file should be
 # appended to the end of the default version.  See the
 # augment_my_env.sh script
+# Altho, that's exactly what I'm doing right now
 
+# set to anything to see debug output, otherwise nothing
+export DEBUG_BASH_FRAMEWORk=1
+debug() {
+  if [ -n "$DEBUG_BASH_FRAMEWORK" ];then
+    echo "[DEBUG] $@"
+  fi
+}
+export -f debug
 orig_indent=$indent
 current=".bashrc" # can't use $0 as these files are sourced, not ran
 debug "Running inside $current"

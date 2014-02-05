@@ -3,7 +3,11 @@
 backup() {
   # $@ are files to be backed up
   for file in $@; do
-    mv "$file" "${file}.bkp"
+    # @todo:  this test is not posix, update it to be if framework is to
+    # work on other shells in the future
+    if [ -f "$file" ]; then
+      mv "$file" "${file}.bkp"
+    fi
   done
 }
 inform() {

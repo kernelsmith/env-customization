@@ -19,8 +19,8 @@ warn() {
 homelink() {
   # $1 is the file to link, it will get linked from ~/ to point to the
   # downloaded source_dir
-  #ln -s FILE_TO_WHICH_TO_LINK NAME_OF_LINK
-  ln -s "${source_dir}/${1}" "${HOME}/$1"
+  #ln -s -f FILE_TO_WHICH_TO_LINK NAME_OF_LINK
+  ln -s -f "${source_dir}/${1}" "${HOME}/$1"
 }
 
 # check that we are in the right starting place
@@ -28,6 +28,7 @@ homelink() {
 if grep -q BASHRC_COMPLETE "./.bashrc" 2> /dev/null; then
   # then we are probably in the right place
   source_dir=$(pwd)
+  # inform "DEBUG: source_dir is $source_dir"
 else
   warn "You don't seem to be running this installer from the downloaded bash directory."
   warn "Try cd'ing to the 'bash' dir inside the downloaded bashrc framework."
@@ -48,7 +49,7 @@ homelink ".bashrc"
 homelink "load_drop_directories.rc"
 homelink ".vimrc"
 # and directories
-for dropdir in $(ls ${source_dir}/*.d); do
+for dropdir in $(ls ${source_dir} | grep '\.d' 2>/dev/null); do
   homelink "$dropdir"
 done
 

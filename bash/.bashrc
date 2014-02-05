@@ -10,12 +10,19 @@
 
 # set to anything to see debug output, otherwise nothing
 export DEBUG_BASH_FRAMEWORK=1
+if [ -n "$DEBUG_BASH_FRAMEWORK" ];then
+  on_off="on"
+else
+  on_off="off"
+fi
+echo "[*] Debugging is currently $on_off.  To change, edit $0."
 debug() {
   if [ -n "$DEBUG_BASH_FRAMEWORK" ];then
     echo "[DEBUG] $@"
   fi
 }
 export -f debug
+export indent="    "
 orig_indent=$indent
 current=".bashrc" # can't use $0 as these files are sourced, not ran
 debug "Running inside $current"

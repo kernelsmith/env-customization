@@ -36,3 +36,8 @@ rgrep() {
   fi
 }
 export -f rgrep
+
+# find large files.  $1 is min size in megs to show 
+find_large() {
+  find ~/ -size +${1}M -ls
+}

@@ -32,7 +32,7 @@ fi
 
 home_files_to_backup="${HOME}/.bash_profile ${HOME}/.bashrc ${HOME}/.vimrc"
 inform "backing up $home_files_to_backup"
-backup home_files_to_backup
+backup $home_files_to_backup
 
 # softlink to the framework files.  You should check these files since
 # you don't know for sure what code you are getting when you git

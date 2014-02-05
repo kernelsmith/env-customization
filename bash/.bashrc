@@ -9,7 +9,7 @@
 # Altho, that's exactly what I'm doing right now
 
 # set to anything to see debug output, otherwise nothing
-export DEBUG_BASH_FRAMEWORk=1
+export DEBUG_BASH_FRAMEWORK=1
 debug() {
   if [ -n "$DEBUG_BASH_FRAMEWORK" ];then
     echo "[DEBUG] $@"

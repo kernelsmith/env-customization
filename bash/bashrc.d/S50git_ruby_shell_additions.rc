@@ -31,7 +31,8 @@ git-current-branch() {
   fi
 }
 
-orig_prompt="[\u@\h \W]\\$ " # set this to "$PS1" to preserve your current prompt
+orig_prompt="$PS1"
+#orig_prompt="[\u@\h \W]\\$ " # set this to "$PS1" to preserve your current prompt
 #bold_prompt="\[$(tput bold)\][\u@\h \W]\\$ "
 BOLD="\[$(tput bold)\]"
 REGULAR="\[$(tput sgr0)\]"

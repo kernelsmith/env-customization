@@ -64,5 +64,6 @@ proxystate
 
 # disable debugging if set
 unset DEBUG_DOT_FILES
-
+#source ~/.profile
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+export PATH=/usr/local/sbin:$PATH

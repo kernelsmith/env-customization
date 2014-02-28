@@ -121,3 +121,5 @@ fi
 #     fi
 # fi
 
+# show full path in finder title bar
+defaults write com.apple.finder _FXShowPosixPathInTitle -bool true

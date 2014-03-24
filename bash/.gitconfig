@@ -1,0 +1,97 @@
+[user]
+  name = Joshua Smith
+  email = kernelsmith@metasploit.com
+  signingkey = 3D609E33
+[github]
+  user = replace_w_yer_uname
+[credential]
+  helper = cache
+[push]
+  default = simple
+[helper]
+  osxkeychain
+  #ssh-agent
+[filter "media"]
+  clean = git-media-clean %f
+  smudge = git-media-smudge %f
+[commit]
+  template = $HOME/.gittemplate
+[merge]
+  tool = vimdiff
+[push]
+  # 'git push' should only hit this branch, not all. Why this isn't
+  # default?
+  default = current
+[color]
+  # All this coloring makes life so much nicer.
+  branch = auto
+  ui = true
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+  whitespace = red reverse
+[core]
+  # Make sure this editor blocks the terminal (unlike gvim),
+  # otherwise commit # messages will be ignored.
+  editor = /usr/bin/vim
+  whitespace=fix,-indent-with-non-tab
+  excludesfile = $HOME/.gitignore
+[alias]
+  # When syncing with a remote, try to be noninvasive.
+  refresh = pull --ff-only
+  # [c]heckout [u]pstream [m]aster; switches branches and refreshes
+  cum = !"git checkout upstream-master && git refresh"
+  # Publish is more serious than just "push" since it takes my
+  # upstream-master and pushes to remote's master. I never remember this
+  # syntax otherwise.
+  publish = push upstream upstream-master:master
+  # Shorthand commands to always sign (-S) and always edit the commit
+  # message.
+  m = merge -S --no-ff --edit
+  c = commit -S --edit
+  # Shorthand to always blame without looking at just whitespace changes
+  b = blame -w
+  # Super handy way to create a local temp branch for testing merges.
+  temp = !"git branch -D temp; git checkout -b temp"
+  # Create and push a tag. Usually used for sprint tags like sprint-A01
+  tag-sprint=!"git tag -s $1 -m \"Tagging as $1\" && git push --tags upstream upstream-master:master && echo Tagged as"
+  # A gitk-like ASCII display.
+  lol = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  # A slightly more useful gitlol that provides diff stats
+  lolstat = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --stat
+  # Show commit logs with signatures
+  slog = log --show-signature
+  # Totally nuke the local master branch and create again from origin's.
+  #remaster =!"git branch -D temp && git checkout -b temp && git branch -D master && git checkout --track -b master origin/master"
+  # A pretty and short commit log
+  nicelog = log --pretty=format:'%Cred%h%Creset -%Creset %s %Cgreen(%cr) %C(bold blue)<%aE>%Creset'
+  # Wipe out local changes and reset to the last local commit.
+  wipe = reset --hard HEAD
+  # Merge (not signed) without fast-forwarding
+  noff = merge --no-ff
+  # Merge (not signed) with fast-forwarding
+  ff = merge --ff-only
+  # Sync all remote upstream branches locally (discarding local changes).
+  branch-sync-upstream = !"for remote in `git branch -r | grep -e \"[[:space:]]upstream\" | grep -v \"upstream/master$\"`; do git checkout --track $remote ; git reset HEAD --hard; git checkout master; git wipe; done"
+  # Display the branch I'm on now, used in some shell functions
+  branch-current = rev-parse --abbrev-ref HEAD
+  thisbranch = !"git branch-current"
+  # List all branches on <remote> that have made it to upstream master.
+  merged-branches-ls =!"git branch -r --merged upstream/master | grep $1 | grep -v -e $1/pr -e $1/master | sed s#^[[:space:]]*$1/## #" # Trailing comment on purpose
+  # Remove all branches on <remote> that have made it to upstream master.
+  merged-branches-rm =!"for b in `git merged-branches-ls $1`; do git push $1 :refs/heads/$b; done #"
+  # Create a local land-1234-some-feature-or-fix branch against upstream/pr/1234
+  land = !"git checkout upstream/pr/$1 && git checkout -b land-$1-$2 -t upstream/pr/$1; #" # Needs trailing comment
+  # Shorthand for land
+  l = !"git land"
+  # Usage: $1 is HISNAME, $2 is HISBRANCH
+  # Linux 
+  # pr-url =!"xdg-open https://github.com/$(git config github.user)/$(basename $(git rev-parse --show-toplevel))/pull/new/$1:$2...$(git branch-current) #"
+  # OS X  Note: Replace Chrome w/whatever browser you want
+  pr-url =!"open -a \"Google Chrome\" https://github.com/$(git config github.user)/$(basename $(git rev-parse --show-toplevel))/pull/new/$1:$2...$(git branch-current) #"

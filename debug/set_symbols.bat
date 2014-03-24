@@ -1,0 +1,1 @@
+setx -m _NT_SYMBOL_PATH SRV*c:\symbols\*http://msdl.microsoft.com/download/symbols;SRV*c:\symbols\*http://symbols.mozilla.org/firefox

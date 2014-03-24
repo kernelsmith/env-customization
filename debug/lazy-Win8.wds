@@ -1,0 +1,135 @@
+$$ =============================================================================
+$$ lazy.wds
+$$
+$$ Matt Molinyawe for the Zero Day Initiative
+$$
+$$ =============================================================================
+
+.block
+{
+	as ${/v:crashCmds} $$>a< c:\\windbgScripts\\lazy.wds std
+}
+
+.block
+{
+	as ${/v:setSymbols} $$>a< c:\\windbgScripts\\lazy.wds setsymbols
+}
+
+.block
+{
+	as ${/v:getSymbols} $$>a< c:\\windbgScripts\\lazy.wds getsymbols
+}
+
+.block
+{
+	as ${/v:coolHeapBPs} $$>a< c:\\windbgScripts\\lazy.wds heapbps
+}
+.block
+{
+	as ${/v:writeBP} $$>a< c:\\windbgScripts\\lazy.wds writebp
+}
+.block
+{
+	as ${/v:killIE} .shell cmd.exe /c "taskkill /f /im iexplore.exe && taskkill /f /im WerFault.exe"
+}
+
+.block
+{
+    as ${/v:lazy} $$>< c:\\windbgScripts\\lazy.wds
+}
+
+.block
+{
+	.if(0 == $sicmp("${$arg1}", "std"))
+	{
+		.printf "kv\n";
+		kv;
+		.printf "\n";
+
+		.printf "u .\n";
+		u .;
+		.printf "\n";
+
+		.printf "ub .\n";
+		ub .;
+		.printf "\n";
+
+		.printf "!gflag\n";
+		!gflag;
+		.printf "\n";
+
+		.printf "vertarget\n";
+		vertarget;
+		.printf "\n";
+		
+		.printf "!lmi mshtml\n";
+		!lmi mshtml;
+		.printf "\n";
+	}
+	.elsif(0 == $sicmp("${$arg1}", "setsymbols"))
+	{
+		.sympath SRV*c:\symbols*http://msdl.microsoft.com/download/symbols 
+	}
+	.elsif(0 == $sicmp("${$arg1}", "getsymbols"))
+	{
+			.reload /f
+	}
+	.elsif(0 == $sicmp("${$arg1}", "writebp"))
+	{
+			.printf "YO DUDE Modify this to suit your needs:\n"
+			.printf /D "<b>bu [instrADDR] \"ba w4 [write location] \\\"r; ub eip; kv; g\\\";g\"</b>"
+	}
+	.elsif(0 == $sicmp("${$arg1}", "heapbps"))
+	{
+		bu101 KERNEL32!HeapFree+0xe ".printf \"HeapFree(%08x, %08x, %08x)\\n\", poi(ebp+8), poi(ebp+0c), poi(ebp+10); g"
+		bu102 KERNEL32!HeapFree ".printf \"---\\n\"; ln poi(esp); g"
+		bu201 ntdll!RtlAllocateHeap ".printf \"---\\n\"; ln poi(esp); g"
+		bu202 ntdll!RtlAllocateHeap+0x5 ".printf \"RtlAllocateHeap(%08x, %08x, %08x)\", poi(ebp+8), poi(ebp+0c), poi(ebp+10); g"
+		bu203 ntdll!RtlAllocateHeap+e6 ".printf \" at %08x\\n\", eax; g"
+		bu301 ntdll!RtlReAllocateHeap ".printf \"---\\n\"; ln poi(esp); g"
+		bu302 ntdll!RtlReAllocateHeap+0x5 ".printf \"RtlReAllocateHeap(%08x, %08x, %08x, %08x)\", poi(ebp+8), poi(ebp+0c), poi(ebp+10), poi(ebp+14); g"
+		bu303 ntdll!RtlReAllocateHeap+0x98 ".printf \" at %08x\\n\", eax; g"
+		bp jscript9+00035d78 ".echo;dds ebp-28 L1;g"
+	}
+	.else
+	{
+		.printf /D "<b>Lazy - Lazy script to ensure that standard debug is not missed and other laziness</b>\n\n";
+		
+		.printf /D "Type <exec cmd=\"al\"><b>'al'</b></exec> to list aliases for script usage\n\n";
+
+		.printf /D "<b>Symbols:</b>\n"
+		.printf /D "<link cmd=\".sympath SRV*c:\\symbols*http://msdl.microsoft.com/download/symbols;\"><b>Set Symbols</b></link>\n"
+		.printf /D /oP "<link cmd=\".reload /f;\"><b>Get Symbols</b></link>\n\n"
+		
+
+		.printf /D "<b>Standard debug:</b>\n"
+		.printf /D /oP "<link cmd=\"${crashCmds}\"><b>Standard debug crash commands</b></link>\n\n"
+
+		.printf /D "<b>Scan for Images:</b>\n"
+		.printf /D "<link cmd=\".imgscan\"><b>Scan for images</b></link>\n\n"
+
+		.printf /D "<b>Fun shell things to do:</b>\n"
+		.printf /D "<link cmd=\".shell cmd.exe /k C:\\PROGRA~1\\WI3CF2~1\\8.0\\DEBUGG~1\\X86\\gflags.exe /i iexplore.exe +hpa \"><b>Enable page heap for iexplore.exe </b></link>\n\n"
+		.printf /D "<link cmd=\".shell cmd.exe /c start calc \"><b>start calc</b></link>\n\n"
+
+		.printf /D "<b>weird commands:</b>\n"
+		.printf /D "<link cmd=\"!gle\"><b>Get last error</b></link>\n\n"
+
+		.printf /D "<b>Reminders for some commands:</b>\n"
+		.printf /D "<link cmd=\".dml_flow\"><b>Get code flow: .dml_flow [start_addr] [end_addr]</b></link>\n\n"
+		.printf /D "<link cmd=\"uf /c @eip\"><b>Get calls made by this function</b></link>\n\n"
+		.printf /D "<link cmd=\"uf /i @eip\"><b>Get number of instructions in this routine</b></link>\n\n"
+		.printf /D "<link cmd=\"lmf\"><b>List Modules</b></link>\n\n"
+
+		.printf /D "<b>!heap:</b>\n"
+		.printf /D "<link cmd=\"!heap -p -a eax\"><b>!heap for eax</b></link>\n\n"
+		.printf /D "<link cmd=\"!heap -p -a ebx\"><b>!heap for ebx</b></link>\n\n"
+		.printf /D "<link cmd=\"!heap -p -a ecx\"><b>!heap for ecx</b></link>\n\n"
+		.printf /D "<link cmd=\"!heap -p -a edx\"><b>!heap for edx</b></link>\n\n"
+		.printf /D "<link cmd=\"!heap -p -a esi\"><b>!heap for esi</b></link>\n\n"
+		.printf /D "<link cmd=\"!heap -p -a edi\"><b>!heap for edi</b></link>\n\n"
+	}
+
+}
+
+

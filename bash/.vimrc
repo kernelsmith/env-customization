@@ -52,8 +52,8 @@ set hls
 set tabstop=2 softtabstop=2 shiftwidth=2 expandtab shiftround smarttab
 retab
 
-" Make gq a little more compact.
-set textwidth=72
+" Automatic text wrapping.
+"set textwidth=82
 
 " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
 set list listchars=tab:»·,trail:·
@@ -67,6 +67,5 @@ set ignorecase   " Do case insensitive matching
 "set incsearch    " Incremental search
 "set autowrite    " Automatically save before commands like :next and :make
 "set hidden       " Hide buffers when they are abandoned
-"set mouse=a      " Enable mouse usage (all modes) in terminals
 set mouse-=a       " Disable auto entering Visual mode when mouse selecting
 set colorcolumn=80 " Display a line at 80 chars

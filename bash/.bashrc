@@ -15,7 +15,7 @@ if [ -n "$DEBUG_BASH_FRAMEWORK" ];then
 else
   on_off="off"
 fi
-echo "[*] Debugging is currently $on_off.  To change, edit .bashrc."
+echo "[*] Debugging is currently $on_off on $(hostname).  To change, edit .bashrc."
 debug() {
   if [ -n "$DEBUG_BASH_FRAMEWORK" ];then
     echo "[DEBUG] $@"

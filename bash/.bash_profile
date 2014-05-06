@@ -54,6 +54,17 @@ elif [ -n "$BASHRC_COMPLETE" ]; then
   indent+="$INDENT_VAL"
   [ -f "$script" -a -x "$script" -a -s "$script" ] && source "$script"
 fi
+
+# ssh-agent if not OS X (OS X uses keychain)
+if [ -z "$IS_OSX" ]; then
+  SSHAGENT=/usr/bin/ssh-agent
+  SSHAGENTARGS="-s"
+  if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT" ]; then
+    eval `$SSHAGENT $SSHAGENTARGS`
+    trap "kill $SSH_AGENT_PID" 0
+  fi
+fi
+
 indent="" # reset the current indent
 # Finally, call any functions we want to actually be run
 # NOTE:  If the env var MYPROXY is set, it will affect these proxy functions

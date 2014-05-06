@@ -56,12 +56,36 @@ elif [ -n "$BASHRC_COMPLETE" ]; then
 fi
 
 # ssh-agent if not OS X (OS X uses keychain)
+#if [ -z "$IS_OSX" ]; then
+#  SSHAGENT=/usr/bin/ssh-agent
+#  SSHAGENTARGS="-s"
+#  if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT" ]; then
+#    eval `$SSHAGENT $SSHAGENTARGS`
+#    trap "kill $SSH_AGENT_PID" 0
+#  fi
+#fi
+
+SSH_ENV="$HOME/.ssh/environment"
+
+function start_agent {
+     echo "Initialising new SSH agent..."
+     /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+     echo succeeded
+     chmod 600 "${SSH_ENV}"
+     . "${SSH_ENV}" > /dev/null
+     /usr/bin/ssh-add;
+}
+
+# Source SSH settings, if applicable
 if [ -z "$IS_OSX" ]; then
-  SSHAGENT=/usr/bin/ssh-agent
-  SSHAGENTARGS="-s"
-  if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT" ]; then
-    eval `$SSHAGENT $SSHAGENTARGS`
-    trap "kill $SSH_AGENT_PID" 0
+  if [ -f "${SSH_ENV}" ]; then
+       . "${SSH_ENV}" > /dev/null
+       #ps ${SSH_AGENT_PID} doesn't work under cywgin
+       ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+           start_agent;
+       }
+  else
+       start_agent;
   fi
 fi
 

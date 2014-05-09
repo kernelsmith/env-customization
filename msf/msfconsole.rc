@@ -1,1 +1,27 @@
-resource msfconsole_aliases.rc
+load alias
+# show
+alias -f so show options
+alias -f sa show advanced
+alias -f se show evasion
+# set/use
+alias -f pay set PAYLOAD
+alias -f multi use exploit/multi/handler
+alias -f psexec use exploit/windows/smb/psexec
+alias -f ss set SESSION
+# sessions
+alias -f s sessions -l -v
+alias -f sk sessions -k
+alias -f sK sessions -K
+alias -f si sessions -i
+# jobs
+alias -f j jobs -l -v
+alias -f jk jobs -k
+alias -f jK jobs -K
+# networking
+alias -f ip ifconfig || ipconfig
+# the one below just picks the interfaces starting with 192
+#   it will also blow up on windows.  Too bad, so sad.
+alias -f myip ip | grep "inet 192" | cut -d " " -f 2
+# miscellaneous
+alias -f in_mem execute -H -i -c -m -d calc.exe -f
+# alias -f sockit setg Proxies SOCKS5:127.0.0.1:9050

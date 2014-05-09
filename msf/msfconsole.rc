@@ -26,7 +26,7 @@ alias -f jK jobs -K
 alias -f ip ifconfig || ipconfig
 # the one below just picks the interfaces starting with 192
 #   it will also blow up on windows.  Too bad, so sad.
-alias -f myip ip | grep "inet 192" | cut -d " " -f 2
+alias -f myip ifconfig | grep "inet 192" | cut -d " " -f 2
 # miscellaneous
 alias -f in_mem execute -H -i -c -m -d calc.exe -f
 # alias -f sockit setg Proxies SOCKS5:127.0.0.1:9050

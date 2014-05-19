@@ -1,20 +1,22 @@
 #!/bin/bash
 
-backup() {
-  # $@ are files to be backed up
-  for file in $@; do
-    # @todo:  this test is not posix, update it to be if framework is to
-    # work on other shells in the future
-    if [ -f "$file" ]; then
-      mv "$file" "${file}.bkp"
-    fi
-  done
-}
 inform() {
   echo "[*] $@"
 }
 warn() {
   echo "[!] $@"
+}
+backup() {
+  # $@ are files to be backed up
+  for file in $@; do
+    # @todo:  this test is not posix, update it to be if framework is to
+    # work on other shells in the future
+    # backup the file if it exists and is not a softlink
+    if [ -f "$file" -a ! -L "$file" ]; then
+      inform "Backing up $file to ${file}.bkp"
+      mv "$file" "${file}.bkp"
+    fi
+  done
 }
 homelink() {
   # $1 is the file to link, it will get linked from ~/ to point to the
@@ -43,12 +45,13 @@ backup $home_files_to_backup
 # softlink to the framework files.  You should check these files since
 # you don't know for sure what code you are getting when you git
 # clone/pull
-inform "linking your dot files to the framework files"
-homelink ".bash_profile"
-homelink ".bashrc"
-homelink "load_drop_directories.rc"
-homelink ".vimrc"
-# and directories
+home_files_to_backup=".bash_profile .bashrc .vimrc load_drop_directories.rc"
+inform "Linking your dot files to the framework files"
+# regular files
+for f in $home_files_to_backup; do
+  homelink "$f"
+done
+# and the directories
 for dropdir in $(ls ${source_dir} | grep '\.d' 2>/dev/null); do
   homelink "$dropdir"
 done

@@ -15,7 +15,7 @@
   clean = git-media-clean %f
   smudge = git-media-smudge %f
 [commit]
-  template = $HOME/.gittemplate
+  template = /Users/kernelsmith/.gittemplate
 [merge]
   tool = vimdiff
 [push]
@@ -41,7 +41,7 @@
   # otherwise commit # messages will be ignored.
   editor = /usr/bin/vim
   whitespace=fix,-indent-with-non-tab
-  excludesfile = $HOME/.gitignore
+	excludesfile = /Users/kernelsmith/.gitignore
 [alias]
   # When syncing with a remote, try to be noninvasive.
   refresh = pull --ff-only
@@ -87,7 +87,7 @@
   # Remove all branches on <remote> that have made it to upstream master.
   merged-branches-rm =!"for b in `git merged-branches-ls $1`; do git push $1 :refs/heads/$b; done #"
   # Create a local land-1234-some-feature-or-fix branch against upstream/pr/1234
-  land = !"git checkout upstream/pr/$1 && git checkout -b land-$1-$2 -t upstream/pr/$1; #" # Needs trailing comment
+  land = !"git checkout upstream/pr/$1 && git checkout -b landing/$1 -t upstream/pr/$1; #" # Needs trailing comment
   # Shorthand for land
   l = !"git land"
   # Usage: $1 is HISNAME, $2 is HISBRANCH

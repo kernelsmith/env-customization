@@ -47,6 +47,7 @@ colorscheme slate
 set background=dark
 filetype plugin indent on
 set hls
+set ruler
 
 " Idiotmatic Ruby default tab indentation
 set tabstop=2 softtabstop=2 shiftwidth=2 expandtab shiftround smarttab

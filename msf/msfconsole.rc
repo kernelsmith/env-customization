@@ -10,6 +10,7 @@ alias -f sa show advanced
 alias -f se show evasion
 alias -f st show targets
 alias -f sp show payloads
+alias -f sact show actions
 # set/use
 alias -f pay set PAYLOAD
 alias -f multi use exploit/multi/handler
@@ -17,11 +18,13 @@ alias -f psexec use exploit/windows/smb/psexec
 alias -f ss set SESSION
 # sessions
 alias -f s sessions -l -v
+alias -f slv session -l -v
 alias -f sk sessions -k
 alias -f sK sessions -K
 alias -f si sessions -i
 # jobs
 alias -f j jobs -l -v
+alias -f jlv jobs -l -v
 alias -f jk jobs -k
 alias -f jK jobs -K
 # networking

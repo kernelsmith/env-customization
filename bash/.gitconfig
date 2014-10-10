@@ -91,7 +91,7 @@
   # Shorthand for land
   l = !"git land"
   # Usage: $1 is HISNAME, $2 is HISBRANCH
-  # Linux 
+  # Linux
   # pr-url =!"xdg-open https://github.com/$(git config github.user)/$(basename $(git rev-parse --show-toplevel))/pull/new/$1:$2...$(git branch-current) #"
   # OS X  Note: Replace Chrome w/whatever browser you want
   pr-url =!"open -a \"Google Chrome\" https://github.com/$(git config github.user)/$(basename $(git rev-parse --show-toplevel))/pull/new/$1:$2...$(git branch-current) #"

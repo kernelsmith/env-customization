@@ -6,7 +6,7 @@ thumb_time_offset=2
 thumb_size="320x240" # 320x240, 640x480, etc, WxH
 
 for infile in *.mp4; do
-  name_wo_ext="${infile%\.*}"
+  name_wo_ext="${infile%%\.*}" # removes all exts, use ${infile%\.*} for just the last extension
   out_video="${name_wo_ext}.stream.mp4"
   out_thumbnail="${name_wo_ext}.jpg"
   # these two ffmpeg operations can be done simultaneously, but they are not for clarity and ease

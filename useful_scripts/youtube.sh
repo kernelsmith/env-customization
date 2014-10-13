@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# FYI, use ffprobe <video_file> to get current encoder info for a video
+
 # transcode/convert
 
 thumb_time_offset=2

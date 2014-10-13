@@ -2,8 +2,20 @@
 
 # transcode/convert
 
-for f in *.mp4; do
-  ffmpeg -i $f -vcodec h264 -movflags faststart -acodec libfdk_aac -f mp4 ${f%\.*}.yt.mp4
+thumb_time_offset=2
+thumb_size="320x240" # 320x240, 640x480, etc, WxH
+
+for infile in *.mp4; do
+  name_wo_ext="${infile%\.*}"
+  out_video="${name_wo_ext}.stream.mp4"
+  out_thumbnail="${name_wo_ext}.jpg"
+  # these two ffmpeg operations can be done simultaneously, but they are not for clarity and ease
+  # plus, the 2nd operation is super quick
+  # transcode
+  ffmpeg -i $infile -vcodec h264 -movflags faststart -acodec libfdk_aac -f mp4 $out_video
+  # create thumbnail, could use $infile or $out_video as src
+  ffmpeg -itsoffset -${thumb_time_offset} -i $out_video \
+    -vcodec mjpeg -vframes 1 -an -f rawvideo -s ${thumb_size} $out_thumbnail
 done
 
 # for all .mp4s in current dir

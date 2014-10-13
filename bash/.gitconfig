@@ -43,6 +43,10 @@
   whitespace=fix,-indent-with-non-tab
 	excludesfile = /Users/kernelsmith/.gitignore
 [alias]
+  # minimal git status
+  s = "status -s"
+  # handy log view
+  lg = "log --oneline --all --graph --decorate"
   # When syncing with a remote, try to be noninvasive.
   refresh = pull --ff-only
   # [c]heckout [u]pstream [m]aster; switches branches and refreshes

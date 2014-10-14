@@ -14,7 +14,7 @@ for infile in *.mp4; do
   # these two ffmpeg operations can be done simultaneously, but they are not for clarity and ease
   # plus, the 2nd operation is super quick
   # transcode
-  ffmpeg -i $infile -vcodec h264 -movflags faststart -acodec libfdk_aac -f mp4 $out_video
+  ffmpeg -i $infile -vcodec h264 -movflags +faststart -acodec libfdk_aac -f mp4 $out_video
   # create thumbnail, could use $infile or $out_video as src
   ffmpeg -itsoffset -${thumb_time_offset} -i $out_video \
     -vcodec mjpeg -vframes 1 -an -f rawvideo -s ${thumb_size} $out_thumbnail

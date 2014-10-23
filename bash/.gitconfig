@@ -51,10 +51,6 @@
   refresh = pull --ff-only
   # [c]heckout [u]pstream [m]aster; switches branches and refreshes
   cum = !"git checkout upstream-master && git refresh"
-  # Publish is more serious than just "push" since it takes my
-  # upstream-master and pushes to remote's master. I never remember this
-  # syntax otherwise.
-  publish = push upstream upstream-master:master
   # Shorthand commands to always sign (-S) and always edit the commit
   # message.
   m = merge -S --no-ff --edit
@@ -91,9 +87,17 @@
   # Remove all branches on <remote> that have made it to upstream master.
   merged-branches-rm =!"for b in `git merged-branches-ls $1`; do git push $1 :refs/heads/$b; done #"
   # Create a local land-1234-some-feature-or-fix branch against upstream/pr/1234
-  land = !"git checkout upstream/pr/$1 && git checkout -b landing/$1 -t upstream/pr/$1; #" # Needs trailing comment
+  land = !"git checkout upstream/pr/$1 && git checkout -b landing/$1 -t upstream/pr/$1 && bundle install" # Needs trailing comment
   # Shorthand for land
   l = !"git land"
+  # actually do the land merge
+  landpr = !"git fetch upstream && git checkout upstream-master && git rebase upstream/master && git m $1"
+  # Publish is more serious than just "push" since it takes my
+  # upstream-master and pushes to remote's master. I never remember this
+  # syntax otherwise.
+  publish = push upstream upstream-master:master
+  # so the sequence, assuming no changes to the pr, is:
+  # git land (or git l); git landpr; git publish
   # Usage: $1 is HISNAME, $2 is HISBRANCH
   # Linux
   # pr-url =!"xdg-open https://github.com/$(git config github.user)/$(basename $(git rev-parse --show-toplevel))/pull/new/$1:$2...$(git branch-current) #"

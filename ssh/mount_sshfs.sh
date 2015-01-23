@@ -10,7 +10,8 @@ LOCAL_USER_ID=501                                   # The UID of the local user 
 LOCAL_GROUP_ID=20                                   # The GID of the local group to map to remote group
                                                     # The UID/GID help avoid permissions/ownership issues
 SSH_KEY="${HOME}/.ssh/rsa"
-OTHER_SSH_OPTIONS="allow_other no_readahead noappledouble nolocalcaches StrictHostKeyChecking=no"
+OTHER_SSH_OPTIONS="allow_other no_readahead noappledouble nolocalcaches"
+# use "StrictHostKeyChecking=no" if you want ssh to ignore if a machine's ssh key has changed, but you can be MitM'd
 SSHFS_DEBUG_OPTIONS="debug,sshfs_debug,loglevel=debug"
 
 # mkdir if nec

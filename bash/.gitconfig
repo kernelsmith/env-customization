@@ -1,7 +1,7 @@
 [user]
-  name = Joshua Smith
-  email = kernelsmith@metasploit.com
-  signingkey = 3D609E33
+  name = My Name
+  email = my@email.com
+  signingkey = XXXXXXXX
 [github]
   user = replace_w_yer_uname
 [credential]
@@ -15,7 +15,7 @@
   clean = git-media-clean %f
   smudge = git-media-smudge %f
 [commit]
-  template = /Users/kernelsmith/.gittemplate
+  template = %{HOME}/.gittemplate
 [merge]
   tool = vimdiff
 [push]
@@ -41,7 +41,7 @@
   # otherwise commit # messages will be ignored.
   editor = /usr/bin/vim
   whitespace=fix,-indent-with-non-tab
-	excludesfile = /Users/kernelsmith/.gitignore
+	excludesfile = %{HOME}/.gitignore
 [alias]
   # minimal git status
   s = "status -s"
@@ -100,6 +100,6 @@
   # git land (or git l); git landpr; git publish
   # Usage: $1 is HISNAME, $2 is HISBRANCH
   # Linux
-  # pr-url =!"xdg-open https://github.com/$(git config github.user)/$(basename $(git rev-parse --show-toplevel))/pull/new/$1:$2...$(git branch-current) #"
+  pr-url =!"xdg-open https://github.com/$(git config github.user)/$(basename $(git rev-parse --show-toplevel))/pull/new/$1:$2...$(git branch-current) #"
   # OS X  Note: Replace Chrome w/whatever browser you want
-  pr-url =!"open -a \"Google Chrome\" https://github.com/$(git config github.user)/$(basename $(git rev-parse --show-toplevel))/pull/new/$1:$2...$(git branch-current) #"
+  #pr-url =!"open -a \"Google Chrome\" https://github.com/$(git config github.user)/$(basename $(git rev-parse --show-toplevel))/pull/new/$1:$2...$(git branch-current) #"

@@ -2,15 +2,16 @@
 
 MOUNT_POINT="${HOME}/sshfs"                        # like /Volumes/sshfs or /mnt/sshfs
 #REMOTE_PATH_TO_MOUNT="/vmfs/volumes/datastore_RAID" # like /vmfs/volumes/datastore1
-REMOTE_PATH_TO_MOUNT="/var/www/production"
+REMOTE_PATH_TO_MOUNT="/"
 PATH_TO_SSHFS="sshfs"                               # just use "sshfs" if it's in root's path
-SSH_USER="zdi"                                     # usually root for an esxi server unless you changed stuff
-SSH_SERVER="redmine"                                   # IP or hostname of esxi server
+SSH_USER="user"                                     # usually root for an esxi server unless you changed stuff
+SSH_SERVER="server"                                   # IP or hostname of esxi server
 LOCAL_USER_ID=501                                   # The UID of the local user to map to remote user
 LOCAL_GROUP_ID=20                                   # The GID of the local group to map to remote group
                                                     # The UID/GID help avoid permissions/ownership issues
-SSH_KEY="/Users/kernelsmith/.ssh/zdi_rsa"
-OTHER_SSH_OPTIONS="allow_other no_readahead noappledouble nolocalcaches StrictHostKeyChecking=no"
+SSH_KEY="${HOME}/.ssh/rsa"
+OTHER_SSH_OPTIONS="allow_other no_readahead noappledouble nolocalcaches"
+# use "StrictHostKeyChecking=no" if you want ssh to ignore if a machine's ssh key has changed, but you can be MitM'd
 SSHFS_DEBUG_OPTIONS="debug,sshfs_debug,loglevel=debug"
 
 # mkdir if nec

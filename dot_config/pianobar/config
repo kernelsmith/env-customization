@@ -3,5 +3,6 @@ password = mypass
 sort = quickmix_01_name_az
 autostart_station = 247782624866357578
 ca_bundle = ca_bundle = ~/.config/pianobar/pandora-ca-bundle.crt
+# can use this for the .crt: https://gist.github.com/anonymous/cfed4d0b49da8b129dd0
 
 # save as ~/.config/pianobar/config

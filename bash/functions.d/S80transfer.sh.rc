@@ -20,7 +20,7 @@ transfer() {
   #echo "res--${res}--res"
   echo "Download url(s):"
   echo $res
-  echo "Combinined/compressed downloads:"
+  echo "Combined/compressed downloads:"
   for url in $res; do
     if echo $url | grep -q $site; then bases="${bases},${url##$site}";fi
   done

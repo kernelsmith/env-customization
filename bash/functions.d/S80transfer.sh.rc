@@ -15,7 +15,7 @@ transfer() {
       curl_cmd="${curl_cmd} ${site}"
       ;;
   esac
-  res=$(echo $($curl_cmd) | grep -i $site)
+  res=$(echo $(eval $curl_cmd) | grep -i $site)
   echo
   echo "res--${res}--res"
   echo "Download url(s):"

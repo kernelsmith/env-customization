@@ -383,10 +383,10 @@ then
   echo "[*]  Resolving datastore reference ${GOLDEN_VM}"
   temp_path="`replace_datastore "${GOLDEN_VM}"`"
   debug_var temp_path
-  GOLDEN_VM=`/bin/readlink -fn $temp_path`
+  GOLDEN_VM=`/bin/readlink -fn "$temp_path"`
 else
   # no datastore reference, so just fully deref the given path
-  GOLDEN_VM=`/bin/readlink -fn ${GOLDEN_VM}`
+  GOLDEN_VM=`/bin/readlink -fn "$GOLDEN_VM"`
 fi
 debug_var GOLDEN_VM
 
@@ -550,7 +550,7 @@ do
   FINAL_VM_PATH="${FINAL_PATH}/$FINAL_VM_NAME"
   # make new directory for new vm (readlink cleans up extra "/./"s)
   mkdir_if_not_exist "${FINAL_VM_PATH}"
-  FINAL_VM_PATH=`readlink -fn "${FINAL_VM_PATH}"`
+  FINAL_VM_PATH=`readlink -fn "$FINAL_VM_PATH"`
   debug_var FINAL_VM_PATH
   FINAL_VMX_PATH=${FINAL_VM_PATH}/$FINAL_VM_NAME.vmx
   debug_var FINAL_VMX_PATH

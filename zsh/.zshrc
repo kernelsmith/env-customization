@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/gits/oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -99,13 +99,13 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
 
 function prep() {
-  cd $HOME/gits/oh-my-zsh
+  cd "$ZSH"
   ls -l
   git branch
 }
 
 function cap() {
-  screencapture -l$(osascript -e 'tell app "iTerm" to id of window 1') $HOME/gits/oh-my-zsh/themes/$ZSH_THEME.png
+  screencapture -l$(osascript -e 'tell app "iTerm" to id of window 1') $ZSH/themes/$ZSH_THEME.png
 }
 
 # themes

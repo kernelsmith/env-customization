@@ -45,8 +45,6 @@
 [alias]
   # minimal git status
   s = "status -s"
-  # handy log view
-  lg = "log --oneline --all --graph --decorate"
   # When syncing with a remote, try to be noninvasive.
   refresh = pull --ff-only
   # [c]heckout [u]pstream [m]aster; switches branches and refreshes
@@ -61,16 +59,22 @@
   temp = !"git branch -D temp; git checkout -b temp"
   # Create and push a tag. Usually used for sprint tags like sprint-A01
   tag-sprint=!"git tag -s $1 -m \"Tagging as $1\" && git push --tags upstream upstream-master:master && echo Tagged as"
+  
+  # --== LOGs ==--
+  # handy one
+  lg = "log --oneline --all --graph --decorate"
   # A gitk-like ASCII display.
   lol = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   # A slightly more useful gitlol that provides diff stats
   lolstat = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --stat
   # Show commit logs with signatures
   slog = log --show-signature
-  # Totally nuke the local master branch and create again from origin's.
-  #remaster =!"git branch -D temp && git checkout -b temp && git branch -D master && git checkout --track -b master origin/master"
+  logs = log --show-signature --name-status
+  # Show commit logs with filenames
+  flog = log --name-status
   # A pretty and short commit log
   nicelog = log --pretty=format:'%Cred%h%Creset -%Creset %s %Cgreen(%cr) %C(bold blue)<%aE>%Creset'
+  
   # Wipe out local changes and reset to the last local commit.
   wipe = reset --hard HEAD
   # Merge (not signed) without fast-forwarding

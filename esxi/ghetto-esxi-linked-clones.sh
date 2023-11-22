@@ -615,7 +615,7 @@ do
     # collect all the vmids in case user wants us to shut them down
     all_vmids="${all_vmids}${FINAL_VM_VMID} "
     # set the file path to the correct directory
-    sed -ir 's|scsi0:0.fileName = "[^"]+"|scsi0:0.fileName ="'${FINAL_VMDK_PATH}'"|' $FINAL_VMX_PATH
+    sed -i -r 's|scsi0:0.fileName = "[^"]+"|scsi0:0.fileName ="'${FINAL_VMDK_PATH}'"|' $FINAL_VMX_PATH
 
     # start the vm so it will get a new mac etc
     echo "[*] Starting VM:  ${FINAL_VM_VMID}"

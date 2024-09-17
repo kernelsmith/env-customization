@@ -61,7 +61,10 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git rails ruby osx brew rvm cp gem bundler)
+plugins=(git cp)
+# plugins=($plugins ruby gem bundler rails)
+# plugins=($plugins osx brew)
+# plugins=($plugins linux)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -74,14 +77,15 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='vim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
+# export PKG_CONFIG_PATH="/usr/local/opt/libpq/lib/pkgconfig"
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
@@ -91,31 +95,47 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# universal aliases
 
-# RVM
-if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
+alias zshconfig="$EDITOR ~/.zshrc"
+alias ohmyzsh="$EDITOR ~/.oh-my-zsh"
+alias ll='ls -lah'
+# dos2unix windows.file unix.file
+alias dos2unix="sed 's/\r$//' $1 > $2"
+alias timestamp="date +'%Y%m%d%H%M%S'"
+alias datestamp="date +'%Y%m%d%H'"
 
-function prep() {
-  cd "$ZSH"
-  ls -l
-  git branch
-}
+# universal functions
 
-function cap() {
-  screencapture -l$(osascript -e 'tell app "iTerm" to id of window 1') $ZSH/themes/$ZSH_THEME.png
-}
+function fingerprint() { ssh-keygen -lf $1 -E sha256; }
+function prep() { cd "$ZSH" && ls -l && git branch; }
 
-# themes
-# arrows from gnzh or funky
-# colors from gianu? or af-magic blue & gray on right
-# ruby on right from gallois or eastwood
-# 2 lines on right from bureau
-# gray from fino
-# fancy X from dallas? or arrow from arrow?
-# lines from jonathan?
-# orange from sonicradish
-# purple from steef
-#
+# depending on OS
+
+if `uname |grep -q -i darwin`; then
+  alias mf="mdfind -name "
+  # alias stop_postgres="brew services stop postgresql@14"
+  # alias start_postgres="brew services start postgresql@14"
+  # alias restart_postgres="brew services restart postgresql@14"
+  # if you don't want/need a background service you can just run:
+  # /usr/local/opt/redis/bin/redis-server /usr/local/etc/redis.conf
+  # alias stop_redis="brew services stop redis"
+  # alias start_redis="brew services start redis"
+  # alias restart_redis="brew services restart redis"
+  alias brew_list_services="brew services list"
+  alias brew_list_services_long="brew services list --debug"
+  alias bsl="brew services list"
+  alias bsll="brew services list --debug"
+  # alias prime_db="rake db:drop db:create db:migrate dev:prime"
+  # alias assets="rails tmp:clear && rails assets:precompile; echo 'you may need to brew install yarn'"
+  # alias gho='GH_HOST=github.other gh'
+
+  # functions
+  function cap() {
+    screencapture -l$(osascript -e 'tell app "iTerm" to id of window 1') $ZSH/themes/$ZSH_THEME.png
+  }
+  function umount { diskutil unmount $1; }
+else
+  alias mf="find . -iname *$1*"
+fi
+

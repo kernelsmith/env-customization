@@ -61,7 +61,15 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git cp)
+plugins=(
+  git
+  git-lfs
+  github
+  bundler
+  rake
+  rbenv
+  ruby
+)
 # plugins=($plugins ruby gem bundler rails)
 # plugins=($plugins osx brew)
 # plugins=($plugins linux)
@@ -69,7 +77,7 @@ plugins=(git cp)
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-
+#
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -87,33 +95,50 @@ fi
 # export ARCHFLAGS="-arch x86_64"
 # export PKG_CONFIG_PATH="/usr/local/opt/libpq/lib/pkgconfig"
 
-# ssh
+# SSH
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
-# universal aliases
 
+# Universal aliases
+#
 alias zshconfig="$EDITOR ~/.zshrc"
 alias ohmyzsh="$EDITOR ~/.oh-my-zsh"
 alias ll='ls -lah'
-# dos2unix windows.file unix.file
 alias dos2unix="sed 's/\r$//' $1 > $2"
 alias timestamp="date +'%Y%m%d%H%M%S'"
 alias datestamp="date +'%Y%m%d%H'"
 
-# universal functions
+# rails/rake aliases
+#
+# alias prime_db="rake db:drop db:create db:migrate dev:prime"
+# alias assets="rails tmp:clear && rails assets:precompile; echo 'you may need to brew install yarn'"
 
+# git/github (if not in ~/.gitconfig) aliases
+#
+# alias gho='GH_HOST=github.other gh'
+
+# Universal functions
+#
 function fingerprint() { ssh-keygen -lf $1 -E sha256; }
 function prep() { cd "$ZSH" && ls -l && git branch; }
 
-# depending on OS
-
+# Depending on OS
+#
 if `uname |grep -q -i darwin`; then
-  alias mf="mdfind -name "
+  # MacOS-specific items
+
+  plugins=($plugins osx brew macos)
+
+  # brew aliases
+  #
+  alias brew_list_services="brew services list"
+  alias brew_list_services_long="brew services list --debug"
+  alias bsl="brew services list"
+  alias bsll="brew services list --debug"
   # alias stop_postgres="brew services stop postgresql@14"
   # alias start_postgres="brew services start postgresql@14"
   # alias restart_postgres="brew services restart postgresql@14"
@@ -122,20 +147,26 @@ if `uname |grep -q -i darwin`; then
   # alias stop_redis="brew services stop redis"
   # alias start_redis="brew services start redis"
   # alias restart_redis="brew services restart redis"
-  alias brew_list_services="brew services list"
-  alias brew_list_services_long="brew services list --debug"
-  alias bsl="brew services list"
-  alias bsll="brew services list --debug"
-  # alias prime_db="rake db:drop db:create db:migrate dev:prime"
-  # alias assets="rails tmp:clear && rails assets:precompile; echo 'you may need to brew install yarn'"
-  # alias gho='GH_HOST=github.other gh'
 
-  # functions
+  # search/find aliases
+  #
+  alias mf="mdfind -name "
+
+  # Functions
+  #
   function cap() {
     screencapture -l$(osascript -e 'tell app "iTerm" to id of window 1') $ZSH/themes/$ZSH_THEME.png
   }
-  function umount { diskutil unmount $1; }
+  function umount() { diskutil unmount $1; }
+
 else
+  # Unix/Linux-specific items
+
+  plugins=($plugins linux)
+
+  # search/find aliases
+  #
   alias mf="find . -iname *$1*"
+
 fi
 

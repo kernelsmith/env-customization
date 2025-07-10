@@ -1,3 +1,5 @@
+# countdown "00:00:10" # 10 sec
+# countdown "00:01:42" # 1 min 42 sec
 countdown()
 (
   IFS=:
